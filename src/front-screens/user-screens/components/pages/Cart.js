@@ -17,19 +17,6 @@ const Cart = props => {
   const [grandTotal0, setGrandTotal0] = useState(0)
   const [useremail, setUseremail] = useState()
   useEffect(() => {
-    // console.log(props.coords)
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        // console.log(position.coords)
-      },
-      err => console.log(err)
-    )
-    create
-      .post(process.env.REACT_APP_BASEURL + "adslots/vertical_index")
-      .then(res => {
-        setAxiosvertical(res.data.data)
-      })
-
     const items = JSON.parse(localStorage.getItem("cartItems"))
     const formData = new FormData()
     formData.append("list", JSON.stringify(items))
@@ -111,6 +98,25 @@ const Cart = props => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log("closed")
   }
+  const deleteCartItem = id => {
+    if (confirm("Are you sure you want to delete this item")) {
+      create
+        .post(
+          process.env.REACT_APP_BASEURL +
+            "basic/deleteCartItem?accessToken=" +
+            localStorage.getItem("token") +
+            "&id=" +
+            id
+        )
+        .then(res => {
+          setCartproducts(res.data.records)
+          setGrandTotal0(res.data.count)
+        })
+    }
+  }
+  const checkOut = () => {
+    props.history.push("checkout")
+  }
 
   return (
     <>
@@ -166,7 +172,10 @@ const Cart = props => {
                           <td>₦ {cart.rates}</td>
                           <td>₦ {cart.rates}</td>
                           <td>
-                            <a class="action-icon text-danger">
+                            <a
+                              class="action-icon text-danger"
+                              onClick={() => deleteCartItem(cart.as_id)}
+                            >
                               {" "}
                               <i class="mdi mdi-trash-can font-size-18"></i>
                             </a>
@@ -185,13 +194,9 @@ const Cart = props => {
                 </div>
                 <div class="col-sm-6">
                   <div class="text-sm-end mt-2 mt-sm-0">
-                    <a
-                      href="#"
-                      class="btn btn-success"
-                      onClick={() => initializePayment(onSuccess, onClose)}
-                    >
+                    <Link to="/checkout" class="btn btn-success">
                       <i class="mdi mdi-cart-arrow-right me-1"></i> Checkout{" "}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -54,13 +54,13 @@ const Cancellation = props => {
       <div className="cancellation-page">
         <div className="container">
           <h2 className="mb-5 text-center">Privacy Policy</h2>
-          <p>
+          <p align="justify">
             <p>
               Protecting your private information is our priority. This
-              Statement of Privacy applies to webtalla.com. For the purposes of
+              Statement of Privacy applies to WebTalla.com. For the purposes of
               this Privacy Policy, unless otherwise noted, all references to Web
-              Talla . The Web Talla website is an Outdoor Media Sales site. By
-              using the Web Talla website, you consent to the data practices
+              Talla . The WebTalla website is an Outdoor Media Sales site. By
+              using the WebTalla website, you consent to the data practices
               described in this statement.
             </p>
             <h4>Collection of your Personal Information</h4>
@@ -82,42 +82,41 @@ const Cancellation = props => {
             </p>
             <h4>Sharing Information with Third Parties</h4>
             <p>
-              Web Talla does not sell, rent or lease its customer lists to third
-              parties. Web Talla may share data with trusted partners to help
+              WebTalla does not sell, rent or lease its customer lists to third
+              parties. WebTalla may share data with trusted partners to help
               perform statistical analysis, send you email or postal mail,
               provide customer support, or arrange for deliveries. All such
               third parties are prohibited from using your personal information
-              except to provide these services to Web Talla , and they are
+              except to provide these services to WebTalla , and they are
               required to maintain the confidentiality of your information. Web
               Talla may disclose your personal information, without notice, if
               required to do so by law or in the good faith belief that such
               action is necessary to: (a) conform to the edicts of the law or
-              comply with legal process served on Web Talla or the site; (b)
-              protect and defend the rights or property of Web Talla; and/or (c)
+              comply with legal process served on WebTalla or the site; (b)
+              protect and defend the rights or property of WebTalla; and/or (c)
               act under exigent circumstances to protect the personal safety of
-              users of Web Talla , or the public.
+              users of WebTalla , or the public.
             </p>
             <h4>Tracking User Behavior</h4>
             <p>
-              Web Talla may keep track of the websites and pages our users visit
-              within Web Talla , in order to determine what Web Talla services
-              are the most popular. This data is used to deliver customized
-              content and advertising within Web Talla to customers whose
-              behaviour indicates that they are interested in a particular
-              subject area.
+              WebTalla may keep track of the websites and pages our users visit
+              within WebTalla , in order to determine what WebTalla services are
+              the most popular. This data is used to deliver customized content
+              and advertising within WebTalla to customers whose behaviour
+              indicates that they are interested in a particular subject area.
             </p>
             <h4>Automatically Collected Information</h4>
             <p>
               Information about your computer hardware and software may be
-              automatically collected by Web Talla . This information can
+              automatically collected by WebTalla . This information can
               include: your IP address, browser type, domain. This information
               is used for the operation of the service, to maintain the quality
               of the service, and to provide general statistics regarding use of
-              the Web Talla website.
+              the WebTalla website.
             </p>
             <h4>Use of Cookies</h4>
             <p>
-              The Web Talla website may use “cookies” to help you personalize
+              The WebTalla website may use “cookies” to help you personalize
               your online experience. A cookie is a text file that is placed on
               your hard disk by a web page server. Cookies cannot be used to run
               programs or deliver viruses to your computer. Cookies are uniquely
@@ -126,26 +125,26 @@ const Cancellation = props => {
               of cookies is to provide a convenience feature to save you time.
               The purpose of a cookie is to tell the Web server that you have
               returned to a specific page. For example, if you personalize Web
-              Talla pages, or register with Web Talla site or services, a cookie
-              helps Web Talla to recall your specific information on subsequent
+              Talla pages, or register with WebTalla site or services, a cookie
+              helps WebTalla to recall your specific information on subsequent
               visits. This simplifies the process of recording your personal
               information, such as billing addresses, shipping addresses, and so
-              on. When you return to the same Web Talla website, the information
+              on. When you return to the same WebTalla website, the information
               you previously provided can be retrieved, so you can easily use
-              the Web Talla features that you customized.
+              the WebTalla features that you customized.
             </p>
             <p>
               You have the ability to accept or decline cookies. Most Web
               browsers automatically accept cookies, but you can usually modify
               your browser setting to decline cookies if you prefer. If you
               choose to decline cookies, you may not be able to fully experience
-              the interactive features of the Web Talla services or websites you
+              the interactive features of the WebTalla services or websites you
               visit.
             </p>
             <h4>Security of your Personal Information</h4>
             <p>
-              Web Talla secures your personal information from unauthorized
-              access, use, or disclosure. Web Talla uses the following methods
+              WebTalla secures your personal information from unauthorized
+              access, use, or disclosure. WebTalla uses the following methods
               for this purpose: When personal information (such as a credit card
               number) is transmitted to other websites, it is protected through
               the use of encryption, such as the Secure Sockets Layer (SSL)
@@ -162,23 +161,23 @@ const Cancellation = props => {
             </p>
             <h4>Children Under Thirteen</h4>
             <p>
-              Web Talla does not knowingly collect personally identifiable
+              WebTalla does not knowingly collect personally identifiable
               information from children under the age of thirteen. If you are
               under the age of thirteen, you must ask your parent or guardian
               for permission to use this website.
             </p>
             <h4>E-mail Communications</h4>
             <p>
-              From time to time, Web Talla may contact you via email for the
+              From time to time, WebTalla may contact you via email for the
               purpose of providing announcements, promotional offers, alerts,
               confirmations, surveys, and/or other general communication. If you
               would like to stop receiving marketing or promotional
-              communications via email from Web Talla , you may opt out of such
+              communications via email from WebTalla , you may opt out of such
               communications by clicking on the UNSUBSCRIBE button.
             </p>
             <h4>Changes to this Statement</h4>
             <p>
-              Web Talla reserves the right to change this Privacy Policy from
+              WebTalla reserves the right to change this Privacy Policy from
               time to time. We will notify you about significant changes in the
               way we treat personal information by sending a notice to the
               primary email address specified in your account, by placing a
@@ -190,10 +189,10 @@ const Cancellation = props => {
             </p>
             <h4>Contact Information</h4>
             <p>
-              Web Talla welcomes your questions or comments regarding this
-              Statement of Privacy. If you believe that Web Talla has not
-              adhered to this Statement, please contact Web Talla at:
-              <a href="mailto:info@webtalla.com">info@webtalla.com</a>
+              WebTalla welcomes your questions or comments regarding this
+              Statement of Privacy. If you believe that WebTalla has not adhered
+              to this Statement, please contact WebTalla at:
+              <a href="mailto:info@WebTalla.com">info@WebTalla.com</a>
             </p>
           </p>
         </div>

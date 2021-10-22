@@ -24,6 +24,7 @@ import BG from "../../assets/front-assets/images/service.png"
 import axios from "axios"
 const create = axios.create()
 
+import IndexEnquiry from "../user-screens/components/forms/IndexEnquiry"
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -75,7 +76,7 @@ const Services = props => {
     )
 
     create
-      .post(process.env.REACT_APP_BASEURL + "adslots/vertical_index")
+      .post(process.env.REACT_APP_BASEURL + "basic/vertical_index")
       .then(res => {
         console.log(res.data.data)
         setAxiosvertical(res.data.data)
@@ -93,12 +94,12 @@ const Services = props => {
   const faqData = {
     rows: [
       {
-        title: "What does Web Talla do?",
-        content: `Web Talla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
+        title: "What does WebTalla do?",
+        content: `WebTalla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
       },
       {
         title: "What services do you provide?",
-        content: `Web Tallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
+        content: `WebTallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
       },
       {
         title: "How to avail of your services?",
@@ -112,7 +113,7 @@ const Services = props => {
       },
       {
         title: "What is the proof of the ad performance?",
-        content: `Web Tallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
+        content: `WebTallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
       },
       {
         title: "Will I be able to view the history of my previous purchases?",
@@ -181,42 +182,104 @@ const Services = props => {
           <div className="row mb-4">
             <div className="text-center">
               <div className="os-subtitle"></div>
-              <h2 className="os-title mb-4">OUR SERVICES </h2>
+              <h2 className="mb-4">OUR SERVICES </h2>
             </div>
-            {axiosvertical.map(itm => (
-              <div class="col-md-6 col-lg-4">
-                <div class="single-what-we-service-item margin-bottom-30">
-                  <Link
-                    to={
-                      localStorage.getItem("isLogin") !== null
-                        ? `/services/${cleanUrl(itm.vertical_name)}`
-                        : ""
-                    }
-                  >
-                    <div class="single-what-img">
-                      <img
-                        width="360"
-                        height="465"
-                        src={
-                          process.env.REACT_APP_BASEURL +
-                          "assets/images/media-verticals/" +
-                          itm.image
+            {axiosvertical.map((itm, index) => (
+              <>
+                {index < 12 && localStorage.getItem("token") === null ? (
+                  <div class="col-md-6 col-lg-4">
+                    <div class="single-what-we-service-item margin-bottom-30">
+                      <Link
+                        to={
+                          localStorage.getItem("isLogin") !== null
+                            ? `/services/${cleanUrl(itm.vertical_name)}`
+                            : ""
                         }
-                        class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-                        alt=""
-                        loading="lazy"
-                      />{" "}
+                      >
+                        <div class="single-what-img">
+                          <img
+                            width="360"
+                            height="465"
+                            src={
+                              process.env.REACT_APP_BASEURL +
+                              "assets/images/media-verticals/" +
+                              itm.image
+                            }
+                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                            alt=""
+                            loading="lazy"
+                          />{" "}
+                        </div>
+                        <div class="content-wrapper">
+                          <div class="icon">
+                            <img
+                              height="70"
+                              src={
+                                process.env.REACT_APP_BASEURL +
+                                "assets/images/media-verticals/" +
+                                itm.icon
+                              }
+                              class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                              alt=""
+                              loading="lazy"
+                            />
+                          </div>
+                          <div class="content">
+                            <h4 class="title">{itm.vertical_name} </h4>
+                            <p>{itm.description.substring(0, 50)} </p>
+                          </div>
+                        </div>
+                      </Link>
                     </div>
-                    <div class="content-wrapper">
-                      <div class="icon"></div>
-                      <div class="content">
-                        <h4 class="title">{itm.vertical_name} </h4>
-                        <p>{itm.description.substring(0, 50)} </p>
-                      </div>
+                  </div>
+                ) : (
+                  <div class="col-md-6 col-lg-4">
+                    <div class="single-what-we-service-item margin-bottom-30">
+                      <Link
+                        to={
+                          localStorage.getItem("isLogin") !== null
+                            ? `/services/${cleanUrl(itm.vertical_name)}`
+                            : ""
+                        }
+                      >
+                        <div class="single-what-img">
+                          <img
+                            width="360"
+                            height="465"
+                            src={
+                              process.env.REACT_APP_BASEURL +
+                              "assets/images/media-verticals/" +
+                              itm.image
+                            }
+                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                            alt=""
+                            loading="lazy"
+                          />{" "}
+                        </div>
+                        <div class="content-wrapper">
+                          <div class="icon">
+                            <img
+                              height="70"
+                              src={
+                                process.env.REACT_APP_BASEURL +
+                                "assets/images/media-verticals/" +
+                                itm.icon
+                              }
+                              class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                              alt=""
+                              loading="lazy"
+                            />
+                          </div>
+                          <div class="content">
+                            <h4 class="title">{itm.vertical_name} </h4>
+                            <p>{itm.description.substring(0, 50)} </p>
+                          </div>
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
-                </div>
-              </div>
+                  </div>
+                )}
+              </>
             ))}
           </div>
         </div>
@@ -230,67 +293,76 @@ const Services = props => {
               <h2 class="wcu-heading--title">
                 Why CHOOSE US
                 <span>
-                  <span>.</span>
+                  <span>?</span>
                 </span>
               </h2>
+              <div className="offset-md-3 col-md-6">
+                <p className="text-white">
+                  When you choose us, you get the benefit of 10+ years of
+                  experience in advertising and marketing. We get your brand the
+                  exposure that it deserves in the most cost-effective way.
+                </p>
+              </div>
             </div>
             <div className="col-md-4 pr-3">
               <div className="col-wcu">
                 <i class="bx bx-layer mb-3"></i>
-                <h4>MULTI FORMAT MEDIA</h4>
-                <p>
-                  Billboards capture repeat exposure business message more
-                  effectively than almost .
+                <h4>Creative Solutions</h4>
+                <p align="justify">
+                  We do a lot more than just advertising, we consult and provide
+                  creative solutions that helps take your brand to the next
+                  level.
                 </p>
               </div>
             </div>
             <div className="col-md-4 pr-3">
               <div className="col-wcu">
                 <i class="bx bx-star mb-3"></i>
-                <h4>SMARTLY PLANNED</h4>
-                <p>
-                  Start building your brand with the strategic one. an industry
-                  that your brand with y expertise to solutions.
+                <h4>Expertise</h4>
+                <p align="justify">
+                  We absolutely love what we do. We bring decades of experience
+                  to the table with our team of experts who have worked across
+                  industries and geographies.
                 </p>
               </div>
             </div>
             <div className="col-md-4 pr-3">
               <div className="col-wcu">
                 <i class="bx bx-building mb-3"></i>
-                <h4>BUILD BRANDS</h4>
-                <p>
-                  A business is only as good as its strategic process, and
-                  that’s what contributes to expectations.
+                <h4>Omni Channel Approach</h4>
+                <p align="justify">
+                  We specialize in multichannel approach enabling seamless
+                  integrated advertising opportunities.
                 </p>
               </div>
             </div>
             <div className="col-md-4 pr-3 pt-4">
               <div className="col-wcu">
-                <i class="bx bx-bus mb-3"></i>
-                <h4>TRANSPORT MEDIA</h4>
-                <p>
-                  Billboards capture repeat exposure business message more
-                  effectively than almost.
+                <i class="bx bx-bulb mb-3"></i>
+                <h4>Innovative</h4>
+                <p align="justify">
+                  We assess and implement the emerging trends in our planning to
+                  get you the best results in your budget
                 </p>
               </div>
             </div>
             <div className="col-md-4 pr-3 pt-4">
               <div className="col-wcu">
                 <i class="bx bx-flag mb-3"></i>
-                <h4>PLACED IN HIGH AREA</h4>
-                <p>
-                  Start building your brand with the strategic one. an industry
-                  that your brand with the strategic.
+                <h4>Result Oriented</h4>
+                <p align="justify">
+                  We are focused on delivering 100% results with campaign
+                  accuracy and effective implementation. We plan for success.
                 </p>
               </div>
             </div>
             <div className="col-md-4 pr-3 pt-4">
               <div className="col-wcu">
                 <i class="bx bx-support mb-3"></i>
-                <h4>24/7 SUPPORT</h4>
-                <p>
-                  A business is only as good as its strategic process, and
-                  that’s what contributes to expectations.
+                <h4>Support</h4>
+                <p align="justify">
+                  We are available at every step of the process to support and
+                  meet our customer’s expectation
                 </p>
               </div>
             </div>
@@ -404,317 +476,7 @@ const Services = props => {
             </div>
             <div className="col-md-6">
               <div className="contact-section">
-                <div className="contact-form">
-                  <form>
-                    <h2>DISCUSS OPTIONS & PRICING</h2>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          name="cf_fname"
-                          className="form-control con-form-control"
-                          aria-required="true"
-                          placeholder="Your First Name"
-                        ></input>
-                      </div>
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          name="cf_fname"
-                          className="form-control con-form-control"
-                          aria-required="true"
-                          placeholder="Your Last Name"
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          name="cf_fname"
-                          className="form-control con-form-control"
-                          aria-required="true"
-                          placeholder="Phone number"
-                        ></input>
-                      </div>
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          name="cf_fname"
-                          className="form-control con-form-control"
-                          aria-required="true"
-                          placeholder="Business Email"
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Budget Range</label>
-                        <select className="form-control">
-                          <option value=""></option>
-                          <option value="$10,000 - $25,000">
-                            $10,000 - $25,000
-                          </option>
-                          <option value="$25,000 - $50,000">
-                            $25,000 - $50,000
-                          </option>
-                          <option value="$50,000 - $75,000">
-                            $50,000 - $75,000
-                          </option>
-                          <option value="$75,000 - $100,000">
-                            $75,000 - $100,000
-                          </option>
-                          <option value="$100000 - $500,000">
-                            $100000 - $500,000
-                          </option>
-                          <option value="$500,000 - $1,000,000">
-                            $500,000 - $1,000,000
-                          </option>
-                          <option value="$1,000,000 - $2,500,000">
-                            $1,000,000 - $2,500,000
-                          </option>
-                          <option value="$2,500,000 - $10,000,000">
-                            $2,500,000 - $10,000,000
-                          </option>
-                          <option value="$10,000,000+">$10,000,000+</option>
-                          <option value="Budget TBD">Budget TBD</option>
-                        </select>
-                      </div>
-                      <div className="col-md-6">
-                        <input
-                          type="text"
-                          name="cf_fname"
-                          className="form-control con-form-control"
-                          aria-required="true"
-                          placeholder="List Your Market(s) of Interest"
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <label>Select Media Type(s) of Interest</label>
-                        <div className="row">
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt1"
-                              />
-                              <label class="form-check-label" for="cnt1">
-                                Airports
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt2"
-                              />
-                              <label class="form-check-label" for="cnt2">
-                                Digital Outdoor
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt3"
-                              />
-                              <label class="form-check-label" for="cnt3">
-                                Subway
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt4"
-                              />
-                              <label class="form-check-label" for="cnt4">
-                                Billboards
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt5"
-                              />
-                              <label class="form-check-label" for="cnt5">
-                                Malls
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt6"
-                              />
-                              <label class="form-check-label" for="cnt6">
-                                Taxi Tops
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt7"
-                              />
-                              <label class="form-check-label" for="cnt7">
-                                Buses
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt8"
-                              />
-                              <label class="form-check-label" for="cnt8">
-                                Mobile Trucks
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt9"
-                              />
-                              <label class="form-check-label" for="cnt9">
-                                Taxi Interiors
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt10"
-                              />
-                              <label class="form-check-label" for="cnt10">
-                                Bus Shelters
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt11"
-                              />
-                              <label class="form-check-label" for="cnt11">
-                                Rail & Train
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <label>What are your Campaign Goals?</label>
-                        <div className="row">
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt1"
-                              />
-                              <label class="form-check-label" for="cnt1">
-                                Branding
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt2"
-                              />
-                              <label class="form-check-label" for="cnt2">
-                                Website Visits
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt3"
-                              />
-                              <label class="form-check-label" for="cnt3">
-                                Other
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt4"
-                              />
-                              <label class="form-check-label" for="cnt4">
-                                Direct Response
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="cnt5"
-                              />
-                              <label class="form-check-label" for="cnt5">
-                                All of the Above
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <label>Campaign</label>
-                        <select className="form-control">
-                          <option value="">Please Select</option>
-                          <option value="new">New Campaign</option>
-                          <option value="existing">Existing Campaign</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <input
-                        type="submit"
-                        value="Submit"
-                        className="wpcf7-form-control wpcf7-submit submit-btn"
-                      ></input>
-                    </div>
-                  </form>
-                </div>
+                <IndexEnquiry />
               </div>
             </div>
           </div>

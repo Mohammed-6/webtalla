@@ -12,6 +12,8 @@ import Index from "../../index"
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 
+import toastr from "toastr"
+import "toastr/build/toastr.min.css"
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb"
 const responsive = {
@@ -48,6 +50,8 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap"
+
+import { Link as SLink } from "react-scroll"
 const ProductDesc = props => {
   const [customActiveTab, setCustomActiveTab] = useState("1")
   const toggleCustom = tab => {
@@ -184,7 +188,7 @@ const ListServices = props => {
           props.match.params.subcategory
       )
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setProducts(res.data.products)
         setdetails(res.data.details)
         const lr = JSON.parse(res.data.details.data)
@@ -193,16 +197,15 @@ const ListServices = props => {
         setdata([{ dd: ddata, ddsc: dddesc }])
 
         const ar = JSON.parse(res.data.details.about)
-        // console.log(fr)
-        const adata = JSON.parse(ar.faq)
-        const addesc = JSON.parse(ar.faq_description)
+        // console.log(ar)
+        const adata = JSON.parse(ar.about)
+        const addesc = JSON.parse(ar.about_description)
         setabout([{ dd: adata, ddsc: addesc }])
 
         const fr = JSON.parse(res.data.details.faq)
         // console.log(fr)
         const fdata = JSON.parse(fr.faq)
         const fddesc = JSON.parse(fr.faq_description)
-        setabout([{ dd: fdata, ddsc: fddesc }])
         setfaq([{ dd: fdata, ddsc: fddesc }])
       })
   }, [])
@@ -223,6 +226,7 @@ const ListServices = props => {
       )
       .then(res => {
         console.log(res.data)
+        showToast("Product added to cart successfully.")
       })
   }
   const changeGrid = () => {
@@ -258,6 +262,34 @@ const ListServices = props => {
       setCustomActiveTab(tab)
     }
   }
+  const showToast = msg => {
+    var toastType
+    var title = ""
+    var message = msg
+    toastr.options = {
+      positionClass: "toast-top-right",
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      closeButton: false,
+      debug: false,
+      progressBar: false,
+      preventDuplicates: false,
+      newestOnTop: true,
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      showDuration: 300,
+      hideDuration: 1000,
+    }
+
+    // setTimeout(() => toastr.success(`Settings updated `), 300)
+    //Toaster Types
+    if (toastType === "info") toastr.info(message, title)
+    else if (toastType === "warning") toastr.warning(message, title)
+    else if (toastType === "error") toastr.error(message, title)
+    else toastr.success(message, title)
+  }
   return (
     <>
       <Index />
@@ -276,6 +308,41 @@ const ListServices = props => {
                   alt=""
                   className="img-fluid mx-auto d-block"
                 />
+                <div className="mt-4">
+                  <div className="card sections-menu">
+                    <div className="card-body">
+                      <div className="sp-about">
+                        <ul>
+                          {about.map(ddd => {
+                            return (
+                              <>
+                                {ddd.dd.map((dt, index) => {
+                                  return (
+                                    <>
+                                      <li>
+                                        <SLink
+                                          to={"scroll-data" + index}
+                                          spy={true}
+                                          smooth={false}
+                                          duration={500}
+                                          onClick={() => {
+                                            toggleCustom("2")
+                                          }}
+                                        >
+                                          {dt.data}
+                                        </SLink>
+                                      </li>
+                                    </>
+                                  )
+                                })}
+                              </>
+                            )
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="col-md-9">
@@ -292,7 +359,7 @@ const ListServices = props => {
                 <div className="col-md-12">
                   <>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-8">
                         <Nav tabs className="nav-tabs-custom nav-justified">
                           <NavItem>
                             <NavLink
@@ -438,10 +505,13 @@ const ListServices = props => {
                         {about.map(ddd => {
                           return (
                             <>
-                              {ddd.dd.map(dt => {
+                              {ddd.dd.map((dt, index) => {
                                 return (
                                   <>
-                                    <Row className="mt-3">
+                                    <Row
+                                      className="mt-3"
+                                      id={"scroll-data" + index}
+                                    >
                                       <div className="col-sm-12">
                                         <h4>{dt.data}</h4>
                                       </div>

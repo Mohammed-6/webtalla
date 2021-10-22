@@ -15,12 +15,12 @@ const Faq = props => {
   const faqData = {
     rows: [
       {
-        title: "What does Web Talla do?",
-        content: `Web Talla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
+        title: "What does WebTalla do?",
+        content: `WebTalla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
       },
       {
         title: "What services do you provide?",
-        content: `Web Tallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
+        content: `WebTallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
       },
       {
         title: "How to avail of your services?",
@@ -34,7 +34,7 @@ const Faq = props => {
       },
       {
         title: "What is the proof of the ad performance?",
-        content: `Web Tallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
+        content: `WebTallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
       },
       {
         title: "Will I be able to view the history of my previous purchases?",

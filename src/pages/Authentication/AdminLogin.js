@@ -25,6 +25,8 @@ import { apiError, loginUser, socialLogin } from "../../store/actions"
 import profile from "../../assets/images/profile-img.png"
 import logo from "../../assets/images/logo.svg"
 import lightlogo from "../../assets/images/logo-light.svg"
+import axios from "axios"
+const create = axios.create()
 
 class Login extends Component {
   constructor(props) {
@@ -32,6 +34,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      loading: false,
     }
 
     // handleValidSubmit
@@ -83,15 +86,28 @@ class Login extends Component {
   }
 
   logmeIn() {
-    if (
-      this.state.email === "admin@wetalla.com" &&
-      this.state.password === "webtalladmin"
-    ) {
-      localStorage.setItem("adminLogin", true)
-      window.location.replace("/admin/ads")
-    } else {
-      alert("Please enter correct email or password")
-    }
+    this.setState({ loading: true })
+    const formData = new FormData()
+    formData.append("email", this.state.email)
+    formData.append("password", this.state.password)
+
+    create
+      .post(process.env.REACT_APP_BASEURL + "/login/adminlogin", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(res => {
+        if (res.data !== 0) {
+          localStorage.setItem("adminLogin", true)
+          localStorage.setItem("adminToken", res.data.access_token)
+          localStorage.setItem("auser_name", res.data.user_name)
+          this.props.history.push("/dashboard")
+          this.setState({ loading: false })
+        } else {
+          alert("Wrong email or password")
+          this.setState({ loading: false })
+        }
+        // console.log(res)
+      })
   }
 
   render() {
@@ -112,7 +128,7 @@ class Login extends Component {
                       <Col className="col-7">
                         <div className="text-primary p-4">
                           <h5 className="text-primary">Welcome!</h5>
-                          <p>Sign in to continue to Webtalla.</p>
+                          <p>Sign in to continue to WebTalla.</p>
                         </div>
                       </Col>
                       <Col className="col-5 align-self-end">
@@ -198,12 +214,26 @@ class Login extends Component {
                         </div>
 
                         <div className="mt-3 d-grid">
-                          <button
-                            className="btn btn-primary btn-block"
-                            type="submit"
-                          >
-                            Log In
-                          </button>
+                          {this.state.loading === false ? (
+                            <button
+                              className="btn btn-primary btn-block"
+                              type="submit"
+                            >
+                              Log In
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {this.state.loading ? (
+                            <div
+                              className="spinner-border text-primary text-center m-1"
+                              role="status"
+                            >
+                              <span className="sr-only">Loading...</span>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </AvForm>
                     </div>
@@ -211,7 +241,7 @@ class Login extends Component {
                 </Card>
                 <div className="mt-5 text-center">
                   <p>
-                    © {new Date().getFullYear()} Wetalla. Crafted with{" "}
+                    © {new Date().getFullYear()} WebTalla. Crafted with{" "}
                     <i className="mdi mdi-heart text-danger" /> by Sasaran
                     Technologies
                   </p>

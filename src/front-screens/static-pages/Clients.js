@@ -56,7 +56,7 @@ const Clients = props => {
             <div class="col-md-12 text-center">
               <div class="page-title-box d-block align-items-center justify-content-between">
                 <h4 class="mb-1 font-size-18 text-center text-white">
-                  Clients
+                  Our Clients
                 </h4>
                 <div class="page-title-right">
                   <nav class="">
@@ -68,7 +68,7 @@ const Clients = props => {
                       </li>
                       <li class="active breadcrumb-item" aria-current="page">
                         <Link to="" className="text-white">
-                          Clients
+                          Our Clients
                         </Link>
                       </li>
                     </ol>
@@ -82,6 +82,32 @@ const Clients = props => {
       <div className="clients-page">
         <div className="container">
           <div className="row">
+            <div className="mb-5 text-center">
+              <ul className="jss108">
+                <li>
+                  <h3>
+                    As a value-driven company, we follow the client’s vision as
+                    our own.
+                  </h3>
+                </li>
+                <li>
+                  <h3>
+                    Our list of customers is spread across industries, and we
+                    have serviced clients from start-ups to established MNCs to
+                    Fortune 500 companies.
+                  </h3>
+                </li>
+                <li>
+                  <h3>
+                    Ever since our inception we have always believed in building
+                    a long-term relationship with our clients.
+                  </h3>
+                </li>
+                <li>
+                  <h3>Here is a list of our Happy Clients..!!</h3>
+                </li>
+              </ul>
+            </div>
             <Clients image={Client1} />
             <Clients image={Client2} />
             <Clients image={Client3} />

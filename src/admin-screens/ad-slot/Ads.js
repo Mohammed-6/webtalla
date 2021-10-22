@@ -7,6 +7,8 @@ import axios from "axios"
 const create = axios.create()
 
 import Breadcrumbs from "../../components/Common/Breadcrumb"
+import toastr from "toastr"
+import "toastr/build/toastr.min.css"
 const Ads = () => {
   const [axioslist, setAxioslist] = useState([])
   useEffect(() => {
@@ -27,10 +29,39 @@ const Ads = () => {
             .post(process.env.REACT_APP_BASEURL + "adslots/ad_index")
             .then(res => {
               console.log(res.data.data)
+              showToast()
               setAxioslist(res.data.data)
             })
         })
     }
+  }
+  const showToast = () => {
+    var toastType
+    var title = ""
+    var message = "Ads deleted successfully."
+    toastr.options = {
+      positionClass: "toast-top-right",
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      closeButton: false,
+      debug: false,
+      progressBar: false,
+      preventDuplicates: false,
+      newestOnTop: true,
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      showDuration: 300,
+      hideDuration: 1000,
+    }
+
+    // setTimeout(() => toastr.success(`Settings updated `), 300)
+    //Toaster Types
+    if (toastType === "info") toastr.info(message, title)
+    else if (toastType === "warning") toastr.warning(message, title)
+    else if (toastType === "error") toastr.error(message, title)
+    else toastr.success(message, title)
   }
   return (
     <>
@@ -39,7 +70,7 @@ const Ads = () => {
           <title>Ads</title>
         </MetaTags>
         <Container fluid={true}>
-          <Breadcrumbs title="Forms" breadcrumbItem="Form Elements" />
+          <Breadcrumbs title="Ads" breadcrumbItem="Ads List" />
           <div className="row">
             <div className="col-md-12">
               <div className="card">
@@ -86,7 +117,7 @@ const Ads = () => {
                             <td>{itm.time}</td>
                             <td>{itm.duration}</td>
                             <td>{itm.rates}</td>
-                            <td>
+                            <td style={{ display: "flex" }}>
                               <Link
                                 className="btn btn-sm btn-primary"
                                 to={"edit-ad?id=" + itm.as_id}

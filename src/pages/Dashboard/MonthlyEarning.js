@@ -8,7 +8,9 @@ import ApexRadial from "./ApexRadial"
 class MonthlyEarning extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      mdata: props.mdata,
+    }
   }
 
   render() {
@@ -21,7 +23,7 @@ class MonthlyEarning extends Component {
             <Row>
               <Col sm="6">
                 <p className="text-muted">This month</p>
-                <h3>$34,252</h3>
+                <h3>₦{this.state.mdata.me}</h3>
                 <p className="text-muted">
                   <span className="text-success me-2">
                     {" "}
@@ -31,7 +33,7 @@ class MonthlyEarning extends Component {
                 </p>
                 <div className="mt-4">
                   <Link
-                    to=""
+                    to="/admin/invoices-list"
                     className="btn btn-primary btn-sm"
                   >
                     View More <i className="mdi mdi-arrow-right ms-1"></i>
@@ -44,9 +46,6 @@ class MonthlyEarning extends Component {
                 </div>
               </Col>
             </Row>
-            <p className="text-muted mb-0">
-              We craft digital, graphic and dimensional thinking.
-            </p>
           </CardBody>
         </Card>
       </React.Fragment>

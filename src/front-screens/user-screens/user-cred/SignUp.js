@@ -7,6 +7,7 @@ const create = axios.create()
 
 // availity-reactstrap-validation
 import { AvField, AvForm } from "availity-reactstrap-validation"
+
 const SignUp = props => {
   // register hooks
   const [title, setTitle] = useState("Mr")
@@ -19,7 +20,13 @@ const SignUp = props => {
   const [phone, setPhone] = useState("")
   const [password, setPassword] = useState("")
   const [confirmpass, setConfirmpass] = useState("")
+  const [captchastatus, setCaptchastatus] = useState(false)
+  const [captchainput, setCaptchainput] = useState("")
+  const [captcha, setCaptcha] = useState("")
+  const [captchaimage, setCaptchaimage] = useState("")
+  const [verificationcode, setVerificationcode] = useState("")
   const [confirm, setConfirm] = useState(false)
+  const [submitstatus, setSubmitstatus] = useState(false)
 
   const [singlebtn, setSinglebtn] = useState(false)
 
@@ -39,7 +46,11 @@ const SignUp = props => {
     setBrandname(e.target.value)
   }
   const changeCountry = e => {
-    setCountry(e.target.value)
+    const tt = e.target.value
+    const splt = tt.split(",")
+
+    setCountry(tt)
+    setPhone(splt[1])
   }
   const changeEmail = e => {
     setEmail(e.target.value)
@@ -53,22 +64,70 @@ const SignUp = props => {
   const changeConfirmpass = e => {
     setConfirmpass(e.target.value)
   }
+  const changeVerificationCode = e => {
+    setVerificationcode(e.target.value)
+  }
+  const changeCaptcha = e => {
+    if (e.target.value === captcha && captchaimage !== "") {
+      if (phone !== "") {
+        create
+          .post(
+            process.env.REACT_APP_BASEURL +
+              "/login/generateSms?code=" +
+              e.target.value +
+              "&phone=" +
+              phone
+          )
+          .then(res => {
+            if (res.data == "error") {
+              alert("Phone number is invalid")
+              reloadCaptcha()
+              e.target.value = ""
+            } else {
+              setCaptchastatus(true)
+              setSubmitstatus(true)
+              setCaptchaimage("")
+            }
+          })
+      }
+    }
+  }
   const changeConfirm = e => {
     setConfirm(!confirm)
   }
-
+  useEffect(() => {
+    create
+      .post(process.env.REACT_APP_BASEURL + "/login/captchaGenerator")
+      .then(res => {
+        setCaptchaimage(
+          process.env.REACT_APP_BASEURL +
+            "assets/images/captcha_images/" +
+            res.data.filename
+        )
+        setCaptcha(res.data.word)
+      })
+  }, [])
   const createAnAccount = e => {
+    const tt = country
+    const splt = tt.split(",")
+
     const formData = new FormData()
     formData.append("title", title)
     formData.append("first_name", firstname)
     formData.append("last_name", lastname)
     formData.append("address", address)
     formData.append("brand_name", brandname)
-    formData.append("country", country)
+    formData.append("country", splt[0])
     formData.append("phone", phone)
     formData.append("login_email", email)
     formData.append("password", password)
+    formData.append("captcha", captcha)
+    formData.append("verify", verificationcode)
 
+    if (captchastatus === false) {
+      alert("Captcha does not match")
+      return
+    }
     if (password !== confirmpass) {
       alert("Both password does not match!")
     } else {
@@ -81,10 +140,14 @@ const SignUp = props => {
           }
         )
         .then(res => {
-          if (res.data === "exists") {
+          if (res.data === "otpwrong") {
+            alert("Please enter correct otp.")
+          } else if (res.data === "exists") {
             alert("User Email already exists.")
+          } else if (res.data.status === "sms") {
+            alert("Please enter OTP to confirm your mobile number")
           } else if (res.data.status === "success") {
-            alert("Please confirm your email")
+            alert("You have registered successfully.")
             props.credModalHide()
           } else {
             console.log(res)
@@ -119,6 +182,18 @@ const SignUp = props => {
   const captchaChange = value => {
     console.log("Captcha value:", value)
   }
+  const reloadCaptcha = () => {
+    create
+      .post(process.env.REACT_APP_BASEURL + "/login/captchaGenerator")
+      .then(res => {
+        setCaptchaimage(
+          process.env.REACT_APP_BASEURL +
+            "assets/images/captcha_images/" +
+            res.data.filename
+        )
+        setCaptcha(res.data.word)
+      })
+  }
   return (
     <>
       <AvForm onValidSubmit={createAnAccount}>
@@ -131,7 +206,7 @@ const SignUp = props => {
                     Title
                   </label>
                   <select
-                    className="form-control"
+                    className="form-control m-0"
                     id="title"
                     value={title}
                     onChange={changeTitle}
@@ -223,7 +298,10 @@ const SignUp = props => {
                     sel = "selected"
                   }
                   return (
-                    <option selected={sel} value={cnt.name}>
+                    <option
+                      selected={sel}
+                      value={cnt.name + "," + cnt.phonecode}
+                    >
                       {cnt.name}
                     </option>
                   )
@@ -307,25 +385,53 @@ const SignUp = props => {
               </div>
             </div>
           </div>
-          <div className="mb-3">
-            <div className="form-group">
-              <label for="verify" className="">
-                Enter verification code
-                <span className="text-danger">*</span>
-              </label>
-              <AvField
-                id="verify"
-                type="text"
-                name="verify"
-                className="form-control"
-                required
-              />
+          {submitstatus ? (
+            <div className="mb-3">
+              <div className="form-group">
+                <label for="verify" className="">
+                  Enter verification code
+                  <span className="text-danger">*</span>
+                </label>
+                <AvField
+                  id="verify"
+                  type="text"
+                  name="verify"
+                  className="form-control"
+                  onChange={changeVerificationCode}
+                />
+              </div>
             </div>
-          </div>
-          <ReCAPTCHA
-            sitekey="6LcoqQgcAAAAAMKD07bVOKgRRcU9Ugx_XqTb3vg4"
-            onChange={captchaChange}
-          />
+          ) : (
+            ""
+          )}
+          {!captchastatus ? (
+            <>
+              <div className="text-center">
+                <img src={captchaimage} />
+                &nbsp;
+                <a onClick={reloadCaptcha}>
+                  <i className="fas fa-redo"></i>
+                </a>
+              </div>
+              <div className="mb-3">
+                <div className="form-group">
+                  <label for="verify" className="">
+                    Enter captcha
+                    <span className="text-danger"></span>
+                  </label>
+                  <AvField
+                    id="captcha"
+                    type="text"
+                    name="captcha"
+                    className="form-control"
+                    onKeyUp={changeCaptcha}
+                  />
+                </div>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
 
           <div className="mt-4 d-grid">
             <button className="btn btn-primary btn-block" type="submit">

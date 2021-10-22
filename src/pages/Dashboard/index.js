@@ -42,24 +42,15 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 //i18n
 import { withTranslation } from "react-i18next"
 import classNames from "classnames"
+import Bar from "./barchart"
 
+import axios from "axios"
+const create = axios.create()
 class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      reports: [
-        { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
-        {
-          title: "Revenue",
-          iconClass: "bx-archive-in",
-          description: "$35, 723",
-        },
-        {
-          title: "Average Price",
-          iconClass: "bx-purchase-tag-alt",
-          description: "$16.2",
-        },
-      ],
+      reports: [],
       email: [
         { title: "Week", linkto: "#", isActive: false },
         { title: "Month", linkto: "#", isActive: false },
@@ -69,16 +60,62 @@ class Dashboard extends Component {
       subscribemodal: false,
       chartSeries: [],
       periodType: "yearly",
+      mdata: [],
+      orders: [],
+      ordd: [],
+      orderunique: "",
     }
 
     this.togglemodal.bind(this)
     this.togglesubscribemodal.bind(this)
+    this.getProductDetails.bind(this)
   }
 
   componentDidMount() {
     const { onGetChartsData } = this.props
     setTimeout(() => this.setState({ subscribemodal: false }), 2000)
     onGetChartsData("yearly")
+
+    create
+      .post(
+        process.env.REACT_APP_BASEURL +
+          "admin/adminDashboard?access_token=" +
+          localStorage.getItem("adminToken")
+      )
+      .then(res => {
+        console.log(res.data)
+        localStorage.setItem("admin_profile", res.data.profile)
+        this.setState({
+          mdata: res.data,
+          reports: [
+            {
+              title: "Orders",
+              iconClass: "bx-copy-alt",
+              description: res.data.orders,
+            },
+            {
+              title: "Revenue",
+              iconClass: "bx-archive-in",
+              description: "₦" + res.data.revenue,
+            },
+            {
+              title: "Average Price",
+              iconClass: "bx-purchase-tag-alt",
+              description: "₦" + res.data.average,
+            },
+          ],
+        })
+      })
+    create
+      .get(
+        process.env.REACT_APP_BASEURL +
+          "admin/getUserOrders?access_token=" +
+          localStorage.getItem("adminToken")
+      )
+      .then(res => {
+        console.log(res.data)
+        this.setState({ orders: res.data })
+      })
   }
 
   togglemodal = () => {
@@ -98,13 +135,27 @@ class Dashboard extends Component {
       this.setState({ ...this.state, chartSeries: this.props.chartsData })
     }
   }
+  getProductDetails = uniq => {
+    create
+      .get(
+        process.env.REACT_APP_BASEURL +
+          "admin/getDashboardOrderDetails?access_token=" +
+          localStorage.getItem("adminToken") +
+          "&unique=" +
+          uniq
+      )
+      .then(res => {
+        console.log(res.data)
+        this.setState({ modal: true, ordd: res.data, orderunique: uniq })
+      })
+  }
 
   render() {
     return (
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Dashboard | Skote - React Admin & Dashboard Template</title>
+            <title>Dashboard | WebTalla</title>
           </MetaTags>
           <Container fluid>
             {/* Render Breadcrumb */}
@@ -114,8 +165,14 @@ class Dashboard extends Component {
             />
             <Row>
               <Col xl="4">
-                <WelcomeComp />
-                <MonthlyEarning />
+                {this.state.mdata.length !== 0 ? (
+                  <>
+                    <WelcomeComp mdata={this.state.mdata} />
+                    <MonthlyEarning mdata={this.state.mdata} />
+                  </>
+                ) : (
+                  ""
+                )}
               </Col>
               <Col xl="8">
                 <Row>
@@ -151,91 +208,100 @@ class Dashboard extends Component {
                   <CardBody>
                     <div className="d-sm-flex flex-wrap">
                       <CardTitle className="card-title mb-4 h4">
-                        Email Sent
+                        Monthly Earning
                       </CardTitle>
-                      <div className="ms-auto">
-                        <ul className="nav nav-pills">
-                          <li className="nav-item">
-                            <Link
-                              to="#"
-                              className={classNames(
-                                { active: this.state.periodType === "weekly" },
-                                "nav-link"
-                              )}
-                              onClick={() => {
-                                this.setState({
-                                  ...this.state,
-                                  periodType: "weekly",
-                                })
-                                this.props.onGetChartsData("weekly")
-                              }}
-                              id="one_month"
-                            >
-                              Week
-                            </Link>{" "}
-                          </li>
-                          <li className="nav-item">
-                            <Link
-                              to="#"
-                              className={classNames(
-                                { active: this.state.periodType === "monthly" },
-                                "nav-link"
-                              )}
-                              onClick={() => {
-                                this.setState({
-                                  ...this.state,
-                                  periodType: "monthly",
-                                })
-                                this.props.onGetChartsData("monthly")
-                              }}
-                              id="one_month"
-                            >
-                              Month
-                            </Link>
-                          </li>
-                          <li className="nav-item">
-                            <Link
-                              to="#"
-                              className={classNames(
-                                { active: this.state.periodType === "yearly" },
-                                "nav-link"
-                              )}
-                              onClick={() => {
-                                this.setState({
-                                  ...this.state,
-                                  periodType: "yearly",
-                                })
-                                this.props.onGetChartsData("yearly")
-                              }}
-                              id="one_month"
-                            >
-                              Year
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
                     <div className="clearfix" />
-                    <StackedColumnChart chartSeries={this.state.chartSeries} />
+                    {this.state.mdata.length !== 0 ? (
+                      <>
+                        <Bar mdata={this.state.mdata} />
+                      </>
+                    ) : null}
                   </CardBody>
                 </Card>
               </Col>
             </Row>
 
             <Row>
-              <Col xl="4">
-                <SocialSource />
-              </Col>
-              <Col xl="4">
-                <ActivityComp />
-              </Col>
-              <Col xl="4">
-                <TopCities />
-              </Col>
-            </Row>
-            <Row>
               <Col lg="12">
-                <LatestTranaction />
+                <Card>
+                  <CardBody>
+                    <div className="mb-4 h4 card-title">Latest Transaction</div>
+                    <table class="table table align-middle table-nowrap table-check">
+                      <thead class="table-light">
+                        <tr>
+                          <th
+                            tabindex="0"
+                            aria-label="Order ID sort desc"
+                            class="sortable"
+                          >
+                            Order ID<span class="caret-4-desc"></span>
+                          </th>
+                          <th
+                            tabindex="0"
+                            aria-label="Date sortable"
+                            class="sortable"
+                          >
+                            Date<span class="order-4"></span>
+                          </th>
+                          <th
+                            tabindex="0"
+                            aria-label="Total sortable"
+                            class="sortable"
+                          >
+                            Total<span class="order-4"></span>
+                          </th>
+                          <th
+                            tabindex="0"
+                            aria-label="Payment Status sortable"
+                            class="sortable"
+                          >
+                            Payment Status<span class="order-4"></span>
+                          </th>
+                          <th
+                            tabindex="0"
+                            aria-label="View Details sortable"
+                            class="sortable"
+                          >
+                            View Details<span class="order-4"></span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.orders.map(ord => (
+                          <tr>
+                            <td>
+                              <a
+                                class="text-body fw-bold"
+                                href="/ecommerce-orders"
+                              >
+                                #{ord.unique_id}
+                              </a>
+                            </td>
+                            <td>{ord.created_at}</td>
+                            <td>₦{ord.amount}</td>
+                            <td>
+                              <span class="font-size-12 badge-soft-success badge badge-success badge-pill">
+                                {ord.order_status}
+                              </span>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn-sm btn-rounded btn btn-primary"
+                                onClick={() =>
+                                  this.getProductDetails(ord.unique_id)
+                                }
+                              >
+                                View Details
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </CardBody>
+                </Card>
               </Col>
             </Row>
           </Container>
@@ -304,16 +370,12 @@ class Dashboard extends Component {
           <div className="modal-content">
             <ModalHeader toggle={this.togglemodal}>Order Details</ModalHeader>
             <ModalBody>
-              <p className="mb-2">
-                Product id: <span className="text-primary">#SK2540</span>
+              <p class="mb-2">
+                Product id:{" "}
+                <span class="text-primary">#{this.state.orderunique}</span>
               </p>
-              <p className="mb-4">
-                Billing Name:{" "}
-                <span className="text-primary">Neal Matthews</span>
-              </p>
-
-              <div className="table-responsive">
-                <Table className="table align-middle table-nowrap">
+              <div class="table-responsive">
+                <table class="table align-middle table-nowrap table">
                   <thead>
                     <tr>
                       <th scope="col">Product</th>
@@ -322,58 +384,64 @@ class Dashboard extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">
-                        <div>
-                          <img src={modalimage1} alt="" className="avatar-sm" />
-                        </div>
-                      </th>
-                      <td>
-                        <div>
-                          <h5 className="text-truncate font-size-14">
-                            Wireless Headphone (Black)
-                          </h5>
-                          <p className="text-muted mb-0">$ 225 x 1</p>
-                        </div>
-                      </td>
-                      <td>$ 255</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <div>
-                          <img src={modalimage2} alt="" className="avatar-sm" />
-                        </div>
-                      </th>
-                      <td>
-                        <div>
-                          <h5 className="text-truncate font-size-14">
-                            Hoodie (Blue)
-                          </h5>
-                          <p className="text-muted mb-0">$ 145 x 1</p>
-                        </div>
-                      </td>
-                      <td>$ 145</td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2">
-                        <h6 className="m-0 text-right">Sub Total:</h6>
-                      </td>
-                      <td>$ 400</td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2">
-                        <h6 className="m-0 text-right">Shipping:</h6>
-                      </td>
-                      <td>Free</td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2">
-                        <h6 className="m-0 text-right">Total:</h6>
-                      </td>
-                      <td>$ 400</td>
-                    </tr>
+                    {this.state.ordd.map(ord => {
+                      const dd = JSON.parse(ord.product_details)
+                      return (
+                        <tr>
+                          <th scope="row">
+                            <div>
+                              {JSON.parse(dd.attachments).map((im, k) => {
+                                if (k == 0) {
+                                  return (
+                                    <img
+                                      src={
+                                        process.env.REACT_APP_BASEURL +
+                                        "assets/images/product-images/" +
+                                        im.file_name
+                                      }
+                                      alt={dd.adname}
+                                      title={dd.adname}
+                                      class="avatar-sm"
+                                    />
+                                  )
+                                }
+                              })}
+                            </div>
+                          </th>
+                          <td>
+                            <div>
+                              <h5 class="text-truncate font-size-14">
+                                {dd.adname}
+                              </h5>
+                            </div>
+                          </td>
+                          <td>₦ {dd.rates}</td>
+                        </tr>
+                      )
+                    })}
+                    {this.state.ordd.map((ord, kl) => {
+                      const dd = JSON.parse(ord.amount)
+                      if (kl == 0) {
+                        return (
+                          <>
+                            <tr>
+                              <td colspan="2">
+                                <h6 class="m-0 text-end">Sub Total:</h6>
+                              </td>
+                              <td>₦ {dd}</td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">
+                                <h6 class="m-0 text-end">Total:</h6>
+                              </td>
+                              <td>₦ {dd}</td>
+                            </tr>
+                          </>
+                        )
+                      }
+                    })}
                   </tbody>
-                </Table>
+                </table>
               </div>
             </ModalBody>
             <ModalFooter>

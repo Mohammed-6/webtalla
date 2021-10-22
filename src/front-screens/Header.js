@@ -17,8 +17,10 @@ import SignUp from "./user-screens/user-cred/SignUp"
 
 const Header = props => {
   const [modal_standard, setModalStandard] = useState(false)
+  const [menu, setMenu] = useState(false)
   const [axiosvertical, setAxiosvertical] = useState([])
   const [currentmenu, setcurrentmenu] = useState("/")
+  const [islogin, setislogin] = useState(false)
 
   const [authtype, setAuthtype] = useState("login")
 
@@ -49,7 +51,11 @@ const Header = props => {
           localStorage.setItem("token", res.data.access_token)
           localStorage.setItem("user_name", res.data.user_name)
           localStorage.setItem("isLogin", "yes")
-          props.history.push("/our-services")
+          if (props.history.location.pathname === "/") {
+            var top = document.getElementById("our-services").offsetTop
+            window.scrollTo(0, top)
+            props.getLogin("1")
+          }
         } else if (res.data === 2) {
           alert("Please verify you mail address! try again later.")
         } else {
@@ -111,9 +117,13 @@ const Header = props => {
           localStorage.setItem("token", res.data.access_token)
           localStorage.setItem("user_name", res.data.user_name)
           localStorage.setItem("isLogin", "yes")
-          props.history.push("/our-services")
+          if (props.history.location.pathname === "/") {
+            var top = document.getElementById("our-services").offsetTop
+            window.scrollTo(0, top)
+            props.getLogin("1")
+          }
           // return <Redirect to="/our-services" />
-          funRedirect()
+          // funRedirect()
         }
         console.log(res)
         // Do something with user
@@ -137,7 +147,11 @@ const Header = props => {
           localStorage.setItem("token", res.data.access_token)
           localStorage.setItem("user_name", res.data.user_name)
           localStorage.setItem("isLogin", "yes")
-          props.history.push("/our-services")
+          if (props.history.location.pathname === "/") {
+            var top = document.getElementById("our-services").offsetTop
+            window.scrollTo(0, top)
+            props.getLogin("1")
+          }
         }
         // console.log(res)
         // Do something with user
@@ -158,7 +172,11 @@ const Header = props => {
           localStorage.setItem("token", res.data.access_token)
           localStorage.setItem("user_name", res.data.user_name)
           localStorage.setItem("isLogin", "yes")
-          props.history.push("/our-services")
+          if (props.history.location.pathname === "/") {
+            var top = document.getElementById("our-services").offsetTop
+            window.scrollTo(0, top)
+            props.getLogin("1")
+          }
         }
         // console.log(res)
         // Do something with user
@@ -166,7 +184,7 @@ const Header = props => {
   }
   const showPopup = () => {
     const oauthUrl =
-      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=774ocr8hcx8kbo&scope=r_liteprofile%20r_emailaddress&state=123456&redirect_uri=` +
+      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78a4v4gtl2gkjn&scope=r_liteprofile%20r_emailaddress&state=123456&redirect_uri=` +
       process.env.REACT_APP_CLIENTURL
     const width = 450,
       height = 730,
@@ -200,6 +218,23 @@ const Header = props => {
   const credModalHide = () => {
     setModalStandard(false)
     setAuthtype("login")
+  }
+  function scrollTo(hash) {
+    location.hash = "#" + hash
+  }
+  function changeLanguageByButtonClick(language) {
+    // var language = document.getElementById("language").value
+    var selectField = document.querySelector("#google_translate_element select")
+    for (var i = 0; i < selectField.children.length; i++) {
+      var option = selectField.children[i]
+      // find desired langauge and change the former language of the hidden selection-field
+      if (option.value == language) {
+        selectField.selectedIndex = i
+        // trigger change event afterwards to make google-lib translate this side
+        selectField.dispatchEvent(new Event("change"))
+        break
+      }
+    }
   }
   return (
     <>
@@ -358,11 +393,11 @@ const Header = props => {
                 <ul className="list-inline">
                   <li className="list-inline-item">
                     <LoginSocialFacebook
-                      appId={"1724253694283387"}
+                      appId={"999769457263220"}
                       onResolve={({ data }) => {
                         facebookLogin(JSON.stringify(data))
                       }}
-                      onReject={err => alert(err)}
+                      onReject={err => console.log(err)}
                     >
                       <a
                         className="social-list-item bg-primary text-white border-primary"
@@ -378,7 +413,7 @@ const Header = props => {
                         "745176847630-sspgkju61o2ejknq0dqci0htem9mk4a1.apps.googleusercontent.com"
                       }
                       onResolve={({ data }) => {
-                        console.log(JSON.stringify(data))
+                        // console.log(JSON.stringify(data))
                         googleLogin(data)
                       }}
                       onReject={err => console.log(err)}
@@ -424,7 +459,10 @@ const Header = props => {
       </Modal>
       <div className="header header-transparent">
         <div className="navbar-container">
-          <nav className="navbar nav-custom navbar-expand-lg">
+          <nav
+            className="navbar nav-custom navbar-expand-lg"
+            style={{ background: menu ? "black" : "transparent" }}
+          >
             <div className="container-fluid nav-custom-container">
               <div className="responsive-mobile-menu">
                 <div className="logo-wrapper">
@@ -446,14 +484,19 @@ const Header = props => {
                   aria-expanded="false"
                   aria-label="Toggle navigation"
                 >
-                  <span className="cross-menu-wrapper">
-                    <span className="bar1"></span>
-                    <span className="bar2"></span>
-                    <span className="bar3"></span>
+                  <span
+                    className="cross-menu-wrapper"
+                    onClick={() => setMenu(!menu)}
+                  >
+                    <i className="fas fa-bars"></i>
                   </span>
                 </button>
               </div>
-              <div id="bizcoxx_main_menu" className="collapse navbar-collapse">
+              <div
+                id="bizcoxx_main_menu"
+                className="collapse navbar-collapse"
+                style={{ display: menu ? "block" : "none" }}
+              >
                 <ul id="main-menu" className="navbar-nav main-menu">
                   <li
                     id="menu-item-471"
@@ -511,23 +554,77 @@ const Header = props => {
                       Contact Us
                     </Link>
                   </li>
+                  <li>
+                    <div
+                      id="google_translate_element"
+                      style={{ display: "none" }}
+                    ></div>
+                  </li>
                 </ul>
               </div>
-              <div className="nav-right-content">
+              <div
+                className="nav-right-content"
+                style={{ display: menu ? "block" : "none" }}
+              >
                 <div className="icon-part">
                   <ul className="social_link">
                     <li>
-                      <a title="" href="#">
+                      <a
+                        title=""
+                        href="#"
+                        class="english"
+                        onClick={() => changeLanguageByButtonClick("en")}
+                        data-lang="English"
+                      >
+                        <img
+                          src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQEBAQEBAQEBAQGBgUGBggHBwcHCAwJCQkJCQwTDA4MDA4MExEUEA8QFBEeFxUVFx4iHRsdIiolJSo0MjRERFz/2wBDAQQEBAQEBAQEBAQGBgUGBggHBwcHCAwJCQkJCQwTDA4MDA4MExEUEA8QFBEeFxUVFx4iHRsdIiolJSo0MjRERFz/wAARCAAqAEADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcDBgEEBQj/xAA1EAABAgIHBwIFAwUAAAAAAAABAgQAAwUGBxESFlYTFBVRk6HTMVciI5GS0hdBYiElRVKC/8QAGgEAAgMBAQAAAAAAAAAAAAAAAAYBBQcDBP/EADERAAAEAwMKBQUAAAAAAAAAAAABAgMEBRESIZETFBUWUVRWkpPSBjIzZoExQVNk0f/aAAwDAQACEQMRAD8AoRouTPo5m9mKnNJ0yS7nrcOydi8VLWAJbYpQSV88X7x0zV9nxZcnc6RwCcuVwr/KACRtNqRgw4L+0RtEhtQzadMG6hwwfoTOegOJLoiYkYGyMB2MwemOO0W39wNF7k62ofTF8Mxp4okbpftN6wXGX++CNHU4ojWRKOlFl8VFeK23oNotqsrcmbj3A7/JxFoz3kkLQ6vReFD+MWWqNDUPx+r8mlHDpk0cSX22fkjd5+xKwhTclIOH+lxjUbqQuXIfCdLmIbIohK3siQENGhxH4XkjB89Q/wBo6lW10QxrDVt/TlFOXFGzUUkpSpaxu7n4lpC20v5eySk+qY8UzWapfHktRWci5W15fTreLCUm4U0lxtG7lM5as5EiNytovJauqHXlazfWk76p/CDK1m+tJ31T+EGYbK9KPPtHlgzDZXpR59o8sZRRjZCYrG1VnXuTkhAZWs31pO+qfwjKas2cJIUmuk4KBvBBSCCP+IxmGyvSjz7R5YMw2V6UefaPLBRj9TFYKzo7j1k5IQI9FS6/MWqGrGpdJSXCpLhs8nYDOTPlzFAgJSQQjliTG2aqVzLhUn9P6T4Nty4Sw+PGJhlbPFt8OP8AlHpHglrOp2HbwwcEtZ1Ow7eGHHWmIP6y06/P9GZaswnEkr6jnYPNMuq9ooSifOqdSUykWwaJYuRKwiQlqSQlSAnDNv5qixVQoGu9DViomnBUN4HTdDsuVzQrZz1uMVygj0Rdf6CHpwS1nU7Dt4YOCWs6nYdvDHJ/xJEPsvM6PUjKINFpJXlUqbR2h/DsEw+y8ufyp1KFpUaFuu2VU+x0QIs0V90IjprgzRX3QiOmuJeCWs6nYdvDBwS1nU7Dt4YW6vbYrlQGazKPbvXihFmivuhEdNcGaK+6ER01xLwS1nU7Dt4YOCWs6nYdvDBV7bFcqAWZR7d68UK1lep3uIrrIgyvU73EV1kQqXqEIeukIQAkTZgAAuAuMa1w5RW5w3uyMVB/TI5goiPWOLvL8THYG/lep3uIrrIgyvU73EV1kQoLhyguHKDOW92RioToGYcRxfSY7A38r1O9xFdZEGV6ne4iusiFBcOUFw5QZy3uyMVA0DMOI4vpMdgb+V6ne4iusiDK9TvcRXWRCguHKNlkhC3rVC0ApM2WCCLwbzBnDe7IxUIVI5glJnrHF3FX0mOwf//Z"
+                          alt="Skote"
+                          height="16"
+                          class="me-1"
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title=""
+                        href="#"
+                        class="french"
+                        onClick={() => changeLanguageByButtonClick("fr")}
+                        data-lang="French"
+                      >
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAELBAMAAAAFMM1/AAAAGFBMVEX///8AI5XtKTmerNf6yMwAGJDtKDjsITLN9eOpAAAA9ElEQVR42u3P0QAAQAgFsBRO4WQCyCB/iCDe72awerGpWO9PiYiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIJA7ZdJrTjvyKSgAAAABJRU5ErkJggg==
+                          "
+                          alt="Skote"
+                          height="16"
+                          class="me-1"
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title=""
+                        href="https://www.facebook.com/WebTalla"
+                        target="_blank"
+                      >
                         <i className="fab fa-facebook-f"></i>
                       </a>
                     </li>
                     <li>
-                      <a title="" href="#">
+                      <a
+                        title=""
+                        href="https://www.linkedin.com/in/webtalla-global-concept-a87003219/"
+                        target="_blank"
+                      >
                         <i className="fab fa-linkedin-in"></i>
                       </a>
                     </li>
                     <li>
-                      <a title="" href="#">
+                      <a
+                        title=""
+                        href="https://www.youtube.com/channel/UCXDCZg9z5LxKpyYzGm1a4nA"
+                        target="_blank"
+                      >
                         <i className="fab fa-youtube"></i>
                       </a>
                     </li>
@@ -555,6 +652,13 @@ const Header = props => {
                     <Link to="/profile" className="boxed-btn blank">
                       {localStorage.getItem("user_name")}
                     </Link>
+                  )}
+                  {islogin ? (
+                    <Link to="/profile" className="boxed-btn blank">
+                      {localStorage.getItem("user_name")}
+                    </Link>
+                  ) : (
+                    ""
                   )}
                 </div>
               </div>

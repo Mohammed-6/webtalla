@@ -28,7 +28,7 @@ class ProfileMenu extends Component {
     super(props)
     this.state = {
       menu: false,
-      name: "Admin",
+      name: localStorage.getItem("auser_name"),
     }
     this.toggle = this.toggle.bind(this)
   }
@@ -56,7 +56,9 @@ class ProfileMenu extends Component {
   }
   logmeOut() {
     localStorage.removeItem("adminLogin")
-    window.location.replace("/login")
+    localStorage.removeItem("adminToken")
+    localStorage.removeItem("auser_name")
+    // window.location.replace("/login")
   }
 
   render() {
@@ -74,7 +76,13 @@ class ProfileMenu extends Component {
           >
             <img
               className="rounded-circle header-profile-user"
-              src={user1}
+              src={
+                localStorage.getItem("admin_profile")
+                  ? process.env.REACT_APP_BASEURL +
+                    "assets/images/user-profiles/" +
+                    localStorage.getItem("admin_profile")
+                  : user1
+              }
               alt="Header Avatar"
             />{" "}
             <span className="d-none d-xl-inline-block ms-1">
@@ -83,25 +91,12 @@ class ProfileMenu extends Component {
             <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
           </DropdownToggle>
           <DropdownMenu className="dropdown-menu-end">
-            <DropdownItem tag="a" href="/profile">
+            <Link tag="a" to="/admin/users" className="dropdown-item">
               <i className="bx bx-user font-size-16 align-middle ms-1" />
               {this.props.t("Profile")}
-            </DropdownItem>
-            <DropdownItem tag="a" href="/crypto-wallet">
-              <i className="bx bx-wallet font-size-16 align-middle me-1" />
-              {this.props.t("My Wallet")}
-            </DropdownItem>
-            <DropdownItem tag="a" href="#">
-              <span className="badge bg-success float-end">11</span>
-              <i className="bx bx-wrench font-size-17 align-middle me-1" />
-              {this.props.t("Settings")}
-            </DropdownItem>
-            <DropdownItem tag="a" href="auth-lock-screen">
-              <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-              {this.props.t("Lock screen")}
-            </DropdownItem>
+            </Link>
             <div className="dropdown-divider" />
-            <Link to="" onClick={this.logmeOut} className="dropdown-item">
+            <Link to="/login" onClick={this.logmeOut} className="dropdown-item">
               <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
               <span>{this.props.t("Logout")}</span>
             </Link>

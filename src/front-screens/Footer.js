@@ -5,7 +5,10 @@ const tawkToPropertyId = "611a7d73d6e7610a49b06fee"
 const tawkToKey = "1fd7nk3f0"
 
 // import PaymentOption from "../assets/front-assets/images/payment-option.png"
-import Logo from "../assets/front-assets/images/logo.png"
+import Godaddy from "../assets/front-assets/images/godaddy.jpeg"
+import DMCA from "../assets/front-assets/images/dmca.jpg"
+import GooglePartner from "../assets/front-assets/images/google-partner-logo.png"
+import AWS from "../assets/front-assets/images/aws-cert.png"
 const Footer = () => {
   const toTop = () => {
     // window.scrollTo(0, 0)
@@ -16,7 +19,6 @@ const Footer = () => {
   return (
     <>
       <footer class="main-footer">
-        <hr className="mb-5" />
         <div class="container">
           <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12 footer-column">
@@ -28,37 +30,26 @@ const Footer = () => {
                   </a>
                 </div>
                 <div class="text">
-                  <p>
+                  <p align="justify">
                     We are a Nigeria-based tech-enabled omnichannel advertising
                     online marketplace with satellite offices across the major
-                    cities. We at Web Talla take pride in our work and have
+                    cities. We at WebTalla take pride in our work and have
                     dedicated ourselves to planning, designing, and handling
                     advertising opportunities for our clients.
                   </p>
+                  <div className="">
+                    <img src={Godaddy} />
+                    <img src={GooglePartner} height="40" />
+                    <img src={AWS} height="30" />
+                    <img src={DMCA} height="30" />
+                  </div>
                 </div>
-                <ul class="footer-social">
-                  <li>
-                    <a href="/">
-                      <i class="fab fa-facebook-f"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/">
-                      <i class="fab fa-linkedin-in"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/">
-                      <i class="fab fa-youtube"></i>
-                    </a>
-                  </li>
-                </ul>
               </div>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 footer-column">
               <div class="service-wideget footer-wideget">
                 <div class="footer-title">
-                  <h4>USERFUL LINKS</h4>
+                  <h4>USEFUL LINKS</h4>
                 </div>
                 <ul className="no-bullets site-footer">
                   <li>
@@ -74,10 +65,6 @@ const Footer = () => {
 
                   <li>
                     <Link to="/terms-condition">Terms of Service</Link>
-                  </li>
-
-                  <li>
-                    <Link to="/cancellation-refund">Refund policy</Link>
                   </li>
                   <li>
                     <Link to="/feedback">Feedback</Link>
@@ -110,7 +97,7 @@ const Footer = () => {
                     <Link to="/contact">Contact Us</Link>
                   </li>
                   <li>
-                    <Link to="/career">Career</Link>
+                    <Link to="/career">Careers</Link>
                   </li>
                 </ul>
               </div>
@@ -148,8 +135,36 @@ const Footer = () => {
                       <i class="fa fa-envelope"></i>
                     </div>
                     <div class="text">
-                      <p> Email: info@webtalla.com</p>
+                      <p> Email: info@WebTalla.com</p>
                     </div>
+                  </div>
+                  <div class="single-item">
+                    <ul class="footer-social">
+                      <li>
+                        <a
+                          href="https://www.facebook.com/WebTalla"
+                          target="_blank"
+                        >
+                          <i class="fab fa-facebook-f"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://www.linkedin.com/in/WebTalla-global-concept-a87003219/"
+                          target="_blank"
+                        >
+                          <i class="fab fa-linkedin-in"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://www.youtube.com/channel/UCXDCZg9z5LxKpyYzGm1a4nA"
+                          target="_blank"
+                        >
+                          <i class="fab fa-youtube"></i>
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -412,7 +427,7 @@ const Footer = () => {
             </li>
           </ul>
           <p class="text-center footer-copyright">
-            © 2021 Webtalla, Powered by Sasaran Technologies. No one is
+            © 2021 WebTalla, Powered by Sasaran Technologies. No one is
             authorized to commercially use the Trademarks.
           </p>
         </div>

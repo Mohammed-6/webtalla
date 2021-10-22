@@ -122,8 +122,8 @@ const HowtoList = props => {
                   <i class="fas fa-users mb-3"></i>
                   <h4>Reach new Customers at no cost</h4>
                   <p>
-                    Web Tallas works as your free sales team by letting
-                    thousands of advertisers know about your media.
+                    WebTallas works as your free sales team by letting thousands
+                    of advertisers know about your media.
                   </p>
                 </div>
               </div>

@@ -19,6 +19,7 @@ class CardUser extends Component {
     super(props)
     this.state = {
       settings_Menu: false,
+      mdata: props.mdata,
     }
     this.toggleSettings = this.toggleSettings.bind(this)
   }
@@ -42,16 +43,24 @@ class CardUser extends Component {
                     <div className="d-flex">
                       <div className="me-3">
                         <img
-                          src={avatar1}
+                          src={
+                            this.state.mdata.profile !== ""
+                              ? process.env.REACT_APP_BASEURL +
+                                "assets/images/user-profiles/" +
+                                this.state.mdata.profile
+                              : avatar1
+                          }
                           alt=""
                           className="avatar-md rounded-circle img-thumbnail"
                         />
                       </div>
                       <div className="flex-1 align-self-center">
                         <div className="text-muted">
-                          <p className="mb-2">Welcome to skote dashboard</p>
-                          <h5 className="mb-1">Henry wells</h5>
-                          <p className="mb-0">UI / UX Designer</p>
+                          <p className="mb-2">Welcome to WeTalla dashboard</p>
+                          <h5 className="mb-1">
+                            {localStorage.getItem("auser_name")}
+                          </h5>
+                          <p className="mb-0">{this.state.mdata.designation}</p>
                         </div>
                       </div>
                     </div>
@@ -63,25 +72,27 @@ class CardUser extends Component {
                         <Col xs="4">
                           <div>
                             <p className="text-muted text-truncate mb-2">
-                              Total Projects
+                              Total Ads
                             </p>
-                            <h5 className="mb-0">48</h5>
+                            <h5 className="mb-0">{this.state.mdata.ads}</h5>
                           </div>
                         </Col>
                         <Col xs="4">
                           <div>
                             <p className="text-muted text-truncate mb-2">
-                              Projects
+                              Total Orders
                             </p>
-                            <h5 className="mb-0">40</h5>
+                            <h5 className="mb-0">{this.state.mdata.orders}</h5>
                           </div>
                         </Col>
                         <Col xs="4">
                           <div>
                             <p className="text-muted text-truncate mb-2">
-                              Clients
+                              Customers
                             </p>
-                            <h5 className="mb-0">18</h5>
+                            <h5 className="mb-0">
+                              {this.state.mdata.customers}
+                            </h5>
                           </div>
                         </Col>
                       </Row>
@@ -89,26 +100,7 @@ class CardUser extends Component {
                   </Col>
 
                   <Col lg="4" className="d-none d-lg-block">
-                    <div className="clearfix mt-4 mt-lg-0">
-                      <Dropdown
-                        isOpen={this.state.settings_Menu}
-                        toggle={this.toggleSettings}
-                        className="float-end"
-                      >
-                        <DropdownToggle
-                          tag="button"
-                          className="btn btn-primary"
-                        >
-                          <i className="bx bxs-cog align-middle me-1"></i>{" "}
-                          Setting
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-end">
-                          <DropdownItem href="#">Action</DropdownItem>
-                          <DropdownItem href="#">Another action</DropdownItem>
-                          <DropdownItem href="#">Something else</DropdownItem>
-                        </DropdownMenu>
-                      </Dropdown>
-                    </div>
+                    <div className="clearfix mt-4 mt-lg-0"></div>
                   </Col>
                 </Row>
               </CardBody>

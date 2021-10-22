@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { NavItem, NavLink, Nav } from "reactstrap"
 import classNames from "classnames"
-import { Link, Redirect } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import axios from "axios"
 const create = axios.create()
 
-const SideBar = ({ isOpen, toggle, mainRedirect }) => {
+const SideBar = ({ isOpen, toggle, navigation }) => {
   const [axiosvertical, setAxiosvertical] = useState([])
   useEffect(() => {
     create
@@ -18,9 +18,8 @@ const SideBar = ({ isOpen, toggle, mainRedirect }) => {
   const cleanUrl = url => {
     return url.replace(/\s+/g, "-").toLowerCase()
   }
-  const clickThis = () => {
-    mainRedirect("asdf")
-    // return <Redirect to={`/services/${data} `} />
+  const goThere = url => {
+    history.push(`/services/${cleanUrl(url)}`)
   }
   return (
     <>
@@ -31,16 +30,10 @@ const SideBar = ({ isOpen, toggle, mainRedirect }) => {
             {axiosvertical.map(itm => {
               return (
                 <NavItem>
-                  <NavLink
-                    tag={Link}
-                    to={`/services/${cleanUrl(itm.vertical_name)}`}
-                    onClick={() => (
-                      <Redirect
-                        to={`/services/${cleanUrl(itm.vertical_name)}`}
-                      />
-                    )}
-                  >
-                    {itm.vertical_name}
+                  <NavLink>
+                    <Link to={`/services/${cleanUrl(itm.vertical_name)}`}>
+                      {itm.vertical_name}
+                    </Link>
                   </NavLink>
                 </NavItem>
               )
@@ -59,4 +52,4 @@ const SideBar = ({ isOpen, toggle, mainRedirect }) => {
     </>
   )
 }
-export default SideBar
+export default withRouter(SideBar)

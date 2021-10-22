@@ -9,7 +9,9 @@ import profileImg from "../../assets/images/profile-img.png"
 class WelcomeComp extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      mdata: props.mdata,
+    }
   }
 
   render() {
@@ -18,52 +20,37 @@ class WelcomeComp extends Component {
         <Card className="overflow-hidden">
           <div className="bg-primary bg-soft">
             <Row>
-              <Col xs="7">
+              <Col xs="8">
                 <div className="text-primary p-3">
                   <h5 className="text-primary">Welcome Back !</h5>
-                  <p>Skote Dashboard</p>
+                  <p>WebTalla Dashboard</p>
                 </div>
               </Col>
-              <Col xs="5" className="align-self-end">
+              <Col xs="4" className="align-self-end">
                 <img src={profileImg} alt="" className="img-fluid" />
               </Col>
             </Row>
           </div>
           <CardBody className="pt-0">
             <Row>
-              <Col sm="4">
+              <Col sm="12">
                 <div className="avatar-md profile-user-wid mb-4">
                   <img
-                    src={avatar1}
+                    src={
+                      process.env.REACT_APP_BASEURL +
+                      "assets/images/user-profiles/" +
+                      this.state.mdata.profile
+                    }
                     alt=""
                     className="img-thumbnail rounded-circle"
                   />
                 </div>
-                <h5 className="font-size-15 text-truncate">Henry Price</h5>
-                <p className="text-muted mb-0 text-truncate">UI/UX Designer</p>
-              </Col>
-
-              <Col sm="8">
-                <div className="pt-4">
-                  <Row>
-                    <Col xs="6">
-                      <h5 className="font-size-15">125</h5>
-                      <p className="text-muted mb-0">Projects</p>
-                    </Col>
-                    <Col xs="6">
-                      <h5 className="font-size-15">$1245</h5>
-                      <p className="text-muted mb-0">Revenue</p>
-                    </Col>
-                  </Row>
-                  <div className="mt-4">
-                    <Link
-                      to=""
-                      className="btn btn-primary btn-sm"
-                    >
-                      View Profile {" "}<i className="mdi mdi-arrow-right ms-1"/>
-                    </Link>
-                  </div>
-                </div>
+                <h5 className="font-size-15 text-truncate">
+                  {localStorage.getItem("auser_name")}
+                </h5>
+                <p className="text-muted mb-0 text-truncate">
+                  {this.state.mdata.designation}
+                </p>
               </Col>
             </Row>
           </CardBody>

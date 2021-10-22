@@ -62,13 +62,11 @@ const ListPackages = props => {
       },
       err => console.log(err)
     )
-    // console.log(props)
+    const ll = props.match.path
+    const dd = ll.split("/")
+    // console.log(dd)
     create
-      .post(
-        process.env.REACT_APP_BASEURL +
-          "basic/cat_getsub?list=" +
-          props.match.params.category
-      )
+      .post(process.env.REACT_APP_BASEURL + "basic/cat_getsub?list=" + dd[2])
       .then(res => {
         console.log(res.data.response)
         setProducts(res.data.response)

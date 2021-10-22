@@ -54,10 +54,10 @@ const Cancellation = props => {
       <div className="cancellation-page">
         <div className="container">
           <h2 className="mb-5 text-center">Cancellation & Refund</h2>
-          <p>
+          <p align="justify">
             <h4>Cancellation</h4>
             <p>
-              Web Talla shall reserve the exclusive right to cancel any content
+              WebTalla shall reserve the exclusive right to cancel any content
               whatsoever from being published or reflected on its website or in
               any other mode. The refunded amount would be returned within a
               period of 15-20 working days with 5% deduction.
@@ -127,7 +127,7 @@ const Cancellation = props => {
             <p>
               <div style={{ paddingLeft: "1.5em" }}>
                 o Cancellation charges will NOT apply Modifications to Terms and
-                Conditions Web Talla in its sole discretion shall reserve the
+                Conditions WebTalla in its sole discretion shall reserve the
                 right to modify the Terms & Conditions any time and without
                 prior notice to its users/advertisers, and edit, modify and
                 alter the content of the advertisement.
@@ -135,16 +135,16 @@ const Cancellation = props => {
             </p>
             <h4>Rescheduling Advertisement</h4>
             <p>
-              Web Talla reserves the right to decline, change or reschedule any
+              WebTalla reserves the right to decline, change or reschedule any
               advertisement/listing notwithstanding earlier acceptance.
             </p>
             <h4>Refusal of Service</h4>
             <p>
-              If Web Talla, in its sole discretion, determines that a violation
+              If WebTalla, in its sole discretion, determines that a violation
               of the Terms & Conditions has occurred, we are entitled to pursue
               legal remedies, including but not limited to the cancellation of
               the user's account and/or the exclusion of any person(s) who may
-              have violated any of the Terms & Conditions. In sum, Web Talla
+              have violated any of the Terms & Conditions. In sum, WebTalla
               reserves the right to refuse service to anyone at any time, and to
               remove any listings or any advertisements for any reason, without
               prior notice.
@@ -160,16 +160,16 @@ const Cancellation = props => {
             <p>
               User agrees that benefits of the service will be enjoyed at
               his/her sole risk. The service is provided on an "as is" and on an
-              "as available" basis. Web Talla expressly refuses to acknowledge
+              "as available" basis. WebTalla expressly refuses to acknowledge
               warranties of any kind; whether express or implied, including, but
               not limited to the implied warranties of merchantability, fitness
               for a particular purpose and non- infringement.
             </p>
             <h4>No Warranty of Service</h4>
             <p>
-              Web Talla makes no warranty that the service will completely
+              WebTalla makes no warranty that the service will completely
               fulfill user's requirements, that the service will be
-              uninterrupted, timely, secure, or error free; nor does Web Talla
+              uninterrupted, timely, secure, or error free; nor does WebTalla
               make any warranty as to the results that may be obtained from the
               use of the service or as to the accuracy or reliability of any
               information obtained from the service.
@@ -178,7 +178,7 @@ const Cancellation = props => {
             <p>
               These Terms & Conditions and the relationship between User and Web
               Talla shall be governed by the laws of Nigeria, without regard to
-              its conflict of law provisions. User and Web Talla agree to submit
+              its conflict of law provisions. User and WebTalla agree to submit
               to the personal and exclusive jurisdiction of the courts located
               within the Nigeria.
             </p>
@@ -197,11 +197,11 @@ const Cancellation = props => {
             </p>
             <h4>Reporting Violations of Terms and Conditions</h4>
             <p>
-              Please help us keep the Web Talla site an enjoyable experience for
+              Please help us keep the WebTalla site an enjoyable experience for
               all Users. If users observe materials or behavior that may violate
-              or are in violation of Web Talla Terms & Conditions, they are
-              requested to contact Web Talla at support@webtalla.com to inform
-              us accordingly.
+              or are in violation of WebTalla Terms & Conditions, they are
+              requested to contact WebTalla at support@WebTalla.com to inform us
+              accordingly.
             </p>
             <h4>Acknowledgement and Acceptance of Terms and Conditions</h4>
             <p>
@@ -211,11 +211,11 @@ const Cancellation = props => {
             </p>
             <h4>Personal Services</h4>
             <p>
-              Advertisements are accepted in good faith but Web Talla does not
+              Advertisements are accepted in good faith but WebTalla does not
               accept responsibility for their veracity, delay, error, omission
               in publication, shrinkage in production, compliance with all
               relevant laws, etc. The advertiser and/or publisher will
-              compensate Web Talla for any action or claim brought by any third
+              compensate WebTalla for any action or claim brought by any third
               party arising directly or indirectly from publication or non
               publication of an advertisement including but not limited to
               infringement of any law/statutory requirement etc.

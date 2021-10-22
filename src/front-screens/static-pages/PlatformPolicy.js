@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import Header from "../Header"
 import Footer from "../Footer"
 
+import BG from "../../assets/front-assets/images/term_condition.png"
 const PlatformPolicy = props => {
   useEffect(() => {
     // console.log(props.coords)
@@ -18,18 +19,49 @@ const PlatformPolicy = props => {
   return (
     <>
       <Header />
+      <div
+        class="banner-area abt-banner-bg"
+        style={{ backgroundImage: "url(" + BG + ")" }}
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="page-title-box d-block align-items-center justify-content-between">
+                <h4 class="mb-1 font-size-18 text-center text-white">
+                  Platform Policy
+                </h4>
+                <div class="page-title-right">
+                  <nav class="">
+                    <ol class="breadcrumb m-0 justify-content-center">
+                      <li class="breadcrumb-item">
+                        <Link to="/" className="text-white">
+                          Home
+                        </Link>
+                      </li>
+                      <li class="active breadcrumb-item" aria-current="page">
+                        <Link to="" className="text-white">
+                          Platform Policy
+                        </Link>
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="cancellation-page">
         <div className="container">
           <h2 className="mb-5 text-center">
-            <u>WEB TALLA PROGRAMMATIC PLATFORM POLICIES</u>
+            WebTalla PROGRAMMATIC PLATFORM POLICIES
           </h2>
-          <p>
+          <p align="justify">
             <p>
               In order to maintain a secure and fair advertising market, all
-              users of Web Talla ’s advertising platforms and services must
-              abide by the following policies. Those that fail to do so may have
-              their accounts suspended or revoked at Web Talla’s sole
-              discretion.
+              users of WebTalla ’s advertising platforms and services must abide
+              by the following policies. Those that fail to do so may have their
+              accounts suspended or revoked at WebTalla’s sole discretion.
             </p>
             <h4>APPROPRIATE USE</h4>
             <p>

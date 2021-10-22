@@ -19,8 +19,10 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 const create = axios.create()
 
+import toastr from "toastr"
+import "toastr/build/toastr.min.css"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
-const AddAd = () => {
+const AddAd = props => {
   const [mediavertical, setmediavertical] = useState("")
   const [adsprovider, setadsprovider] = useState("")
   const [adname, setadname] = useState()
@@ -164,6 +166,8 @@ const AddAd = () => {
       })
       .then(res => {
         console.log(res)
+        showToast()
+        props.history.push("/admin/ads")
       })
   }
   const editProvider = (e, id) => {
@@ -200,6 +204,34 @@ const AddAd = () => {
 
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
+  }
+  const showToast = () => {
+    var toastType
+    var title = ""
+    var message = "Ads added successfully."
+    toastr.options = {
+      positionClass: "toast-top-right",
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      closeButton: false,
+      debug: false,
+      progressBar: false,
+      preventDuplicates: false,
+      newestOnTop: true,
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      showDuration: 300,
+      hideDuration: 1000,
+    }
+
+    // setTimeout(() => toastr.success(`Settings updated `), 300)
+    //Toaster Types
+    if (toastType === "info") toastr.info(message, title)
+    else if (toastType === "warning") toastr.warning(message, title)
+    else if (toastType === "error") toastr.error(message, title)
+    else toastr.success(message, title)
   }
   return (
     <>

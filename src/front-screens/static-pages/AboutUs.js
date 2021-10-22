@@ -56,24 +56,25 @@ const AboutUs = props => {
           </div>
         </div>
       </div>
-      <div className="container pt-4 pb-5">
+      <div className="container about-section pt-4 pb-5">
         <div className="row">
           <h2>
-            ARE YOU LOOKING FOR A ONE-STOP FOR VARIOUS FORMS OF ADVERTISING?
+            ARE YOU LOOKING FOR A ONE-STOP SOLUTION FOR VARIOUS FORMS OF
+            ADVERTISING?
           </h2>
           <div className="col-md-6">
             <img src={About1} className="pt-4" />
           </div>
           <div className="col-md-6 d-table">
             <div className="abt-valg">
-              <p>
+              <p align="justify">
                 If the answer to the question above is Yes, then you have landed
                 on the right website.
               </p>
-              <p>
-                Web Talla is here to take care of your advertising priorities
-                for you, with you. Sit within the comfort of your office and
-                select all your advertising options at a click of button.
+              <p align="justify">
+                WebTalla is here to take care of your advertising priorities for
+                you, with you. Sit within the comfort of your office and select
+                all your advertising options at a click of button.
               </p>
             </div>
           </div>
@@ -82,17 +83,17 @@ const AboutUs = props => {
           <div className="col-md-6">
             <h2>WHO WE ARE?</h2>
             <div className="abt-valg">
-              <p>
+              <p align="justify">
                 We are a Nigeria-based tech-enabled omnichannel advertising
                 online marketplace with satellite offices across the major
                 cities.
               </p>
-              <p>
-                We at Web Talla take pride in our work and have dedicated
+              <p align="justify">
+                We at WebTalla take pride in our work and have dedicated
                 ourselves to planning, designing, and handling advertising
                 opportunities for our clients.
               </p>
-              <p>
+              <p align="justify">
                 All the specialized advertising service options are just a click
                 away and available through a single platform. Working closely
                 with the client our platform provides them the freedom to
@@ -101,7 +102,7 @@ const AboutUs = props => {
                 advertising mediums ensuring accurate brand exposure both at
                 local and national levels.
               </p>
-              <p>
+              <p align="justify">
                 We specialize in innovative programmatic advertising solutions
                 for publishing advertising campaigns tailored to our clients'
                 needs. We integrate the advertising channels across mediums
@@ -123,21 +124,21 @@ const AboutUs = props => {
           <div className="col-md-6 d-table">
             {" "}
             <div className="abt-valg">
-              <p>
+              <p align="justify">
                 We specialize in creating an affordable, easily accessible
                 multi-channel advertising online marketplace tailored to our
                 clients' needs.
               </p>
-              <p>
+              <p align="justify">
                 We have a large network of strategic partners across Nigeria to
                 have robust support in all areas. We have tied up with all
                 leading local and national media houses.
               </p>
-              <p>
+              <p align="justify">
                 Our team comes with fresh and innovative ideas backed with
                 decades of experience in advertising.
               </p>
-              <p>
+              <p align="justify">
                 We ensure to provide solutions keeping up with all the latest
                 advertising trends including Artificial Intelligence and Machine
                 Learning.
@@ -177,7 +178,7 @@ const AboutUs = props => {
           </div>
           <div className="col-md-6 d-table">
             <div className="abt-valg">
-              <p>
+              <p align="justify">
                 Our vision is to become a global omnichannel advertising online
                 marketplace to assist our clients in achieving their marketing
                 goals and get maximum exposure. We see ourselves walking with

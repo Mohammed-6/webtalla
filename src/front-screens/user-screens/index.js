@@ -18,8 +18,6 @@ const UserHeader = props => {
   const history = useHistory()
   const mainRedirect = data => {
     console.log(data)
-    history.push("/our-services/")
-    // return <Redirect to={`/services/${data} `} />
   }
   return (
     <div className="App wrapper">

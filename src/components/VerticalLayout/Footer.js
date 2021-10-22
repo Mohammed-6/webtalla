@@ -8,8 +8,10 @@ class Footer extends Component {
         <footer className="footer">
           <div className="container-fluid">
             <Row>
-              <Col sm={6}>{new Date().getFullYear()} © Webtalla.</Col>
-              <Col sm={6}>
+              <Col sm={6} className="text-white">
+                {new Date().getFullYear()} © WebTalla.
+              </Col>
+              <Col sm={6} className="text-white">
                 <div className="text-sm-end d-none d-sm-block">
                   Powered by Sasaran Technologies
                 </div>

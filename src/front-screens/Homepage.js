@@ -40,7 +40,7 @@ const responsive = {
     items: 4,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min: 550 },
     items: 3,
   },
   mobile: {
@@ -69,6 +69,7 @@ const responsiveBanner = {
 }
 const HomePage = props => {
   const [axiosvertical, setAxiosvertical] = useState([])
+  const [getstatus, setGetstatus] = useState(false)
   const Services = props => {
     const cleanUrl = url => {
       return url.replace(/\s+/g, "-").toLowerCase()
@@ -106,6 +107,45 @@ const HomePage = props => {
       </div>
     )
   }
+  const UserServices = props => {
+    const cleanUrl = url => {
+      return url.replace(/\s+/g, "-").toLowerCase()
+    }
+    return (
+      <div className="col-md-2 p-3">
+        <Link
+          to={
+            localStorage.getItem("isLogin") !== null
+              ? `/services/${cleanUrl(props.data.vertical_name)}`
+              : ""
+          }
+        >
+          <div className="card">
+            <div className="us-card-body mb-2">
+              <div className="text-center">
+                <img
+                  src={
+                    process.env.REACT_APP_BASEURL +
+                    "assets/images/media-verticals/" +
+                    props.data.icon
+                  }
+                  height="70"
+                />
+                <div className="p-2">
+                  <hr />
+                </div>
+                <div className="service-container">
+                  <div className="text-center uservices-title">
+                    {props.data.vertical_name}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </div>
+    )
+  }
   useEffect(() => {
     // console.log(props.coords)
     navigator.geolocation.getCurrentPosition(
@@ -116,11 +156,14 @@ const HomePage = props => {
     )
 
     create
-      .post(process.env.REACT_APP_BASEURL + "adslots/vertical_index")
+      .post(process.env.REACT_APP_BASEURL + "basic/vertical_index")
       .then(res => {
         console.log(res.data.data)
         setAxiosvertical(res.data.data)
       })
+    if (localStorage.getItem("isLogin") === "yes") {
+      setGetstatus(true)
+    }
   }, [])
   const settings = {
     dots: false,
@@ -133,12 +176,12 @@ const HomePage = props => {
   const faqData = {
     rows: [
       {
-        title: "What does Web Talla do?",
-        content: `Web Talla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
+        title: "What does WebTalla do?",
+        content: `WebTalla is an Advertising buying platform that provides a wide range of advertising options to choose from based on your advertising plans and budget.`,
       },
       {
         title: "What services do you provide?",
-        content: `Web Tallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
+        content: `WebTallas’ services range from traditional advertising options of television, radio, newspapers, and other publications to digitally-enabled outdoor advertising, ads on digital mediums, social media, influencer marketing, and many more.`,
       },
       {
         title: "How to avail of your services?",
@@ -152,7 +195,7 @@ const HomePage = props => {
       },
       {
         title: "What is the proof of the ad performance?",
-        content: `Web Tallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
+        content: `WebTallas’ provides detailed big data analytics of the ad performance; if they have been hired to do so. The cost of data analytics is over and above the ad placement charges.`,
       },
       {
         title: "Will I be able to view the history of my previous purchases?",
@@ -178,9 +221,12 @@ const HomePage = props => {
     // arrowIcon: "V",
     // tabFocus: true
   }
+  const loginStatus = dd => {
+    setGetstatus(true)
+  }
   return (
     <>
-      <Header />
+      <Header getLogin={loginStatus} />
       <div className="home-banner">
         <Carousel
           responsive={responsiveBanner}
@@ -203,7 +249,8 @@ const HomePage = props => {
             <div className="col-md-6">
               <div className="intro-title">
                 <span className="first-intro">
-                  WE KEEP YOU IN PUBLIC’S SIGHT & MIND
+                  WE KEEP YOU IN PUBLIC’S <br />
+                  SIGHT & MIND
                 </span>
                 <br />
                 <span className="second-intro">ATTENTION</span>
@@ -240,21 +287,41 @@ const HomePage = props => {
           </div>
         </div>
       </div>
-      <div className="our-services">
-        <div className="text-center">
-          <div className="os-subtitle"></div>
-          <h2 className="os-title">OUR SERVICES </h2>
-        </div>
-        <div className="container">
-          <div className="mt-5">
-            <div className="row">
-              {axiosvertical.map(itm => (
-                <Services data={itm} />
-              ))}
+      {getstatus ? (
+        <div className="our-services">
+          <div className="container-fluid p-0 uservices">
+            <div className="text-center">
+              <div className="os-subtitle"></div>
+              <h2 className="os-title pt-5">OUR SERVICES </h2>
+            </div>
+            <div className="container" id="user-services">
+              <div className="mt-5">
+                <div className="row">
+                  {axiosvertical.map(itm => (
+                    <UserServices data={itm} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="our-services">
+          <div className="text-center">
+            <div className="os-subtitle"></div>
+            <h2 className="os-title">OUR SERVICES </h2>
+          </div>
+          <div className="container" id="our-services">
+            <div className="mt-5">
+              <div className="row">
+                {axiosvertical.map((itm, index) => (
+                  <>{index < 12 ? <Services data={itm} /> : ""}</>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="container-fluid p-0 mt-3">
         <div className="row">
           <div className="col-md-6 p-0">
@@ -303,8 +370,8 @@ const HomePage = props => {
           <div className="text-center">
             <h2>WHO WE ARE</h2>
             <p className="pt-2" style={{ color: "black" }}>
-              Web Talla is a Nigeria-based one-stop-shop tech-enabled
-              omnichannel advertising online marketplace.
+              WebTalla is a Nigeria-based one-stop-shop tech-enabled omnichannel
+              advertising online marketplace.
               <br />
               We specialize in innovative programmatic advertising solutions for
               publishing advertising campaigns tailored to our clients' needs.
@@ -340,7 +407,7 @@ const HomePage = props => {
         </div>
       </div>
       <div className="dyn-section pt-5">
-        <div className="dyn-title text-center">DID YOUR KNOW?</div>
+        <div className="dyn-title text-center">DID YOU KNOW?</div>
         <h4 className="pb-3 text-center">
           Outdoor Advertising (OOH) is the Second most effective advertising
           medium in Nigeria..

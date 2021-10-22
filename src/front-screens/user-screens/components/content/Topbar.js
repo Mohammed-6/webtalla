@@ -83,7 +83,7 @@ const Topbar = ({ toggleSidebar }, props) => {
         <Nav className="ml-auto d-flex" navbar>
           <NavItem>
             <NavLink tag={Link} to={"/"}>
-              <img src={Logo} alt="webtalla" className="user-logo" />
+              <img src={Logo} alt="WebTalla" className="user-logo" />
             </NavLink>
           </NavItem>
         </Nav>

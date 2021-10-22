@@ -170,6 +170,19 @@ class Header extends Component {
 
               <div className="dropdown d-none d-lg-inline-block ms-1">
                 <button
+                  aria-haspopup="true"
+                  class="btn header-item"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAADIBAMAAAA0O6rRAAAAD1BMVEX///+94NKe0r0Ah1EAgkm2pA88AAAAwElEQVR42u3PMQEAMAzDsIAYkzIof1C7iiCvjMDK1G3qXn8REBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEJDrA3IRz71pWvBvAAAAAElFTkSuQmCC
+                    "
+                    alt="WebTalla"
+                    height="16"
+                    class="me-1"
+                  />
+                </button>
+                <button
                   type="button"
                   onClick={this.toggleFullscreen}
                   className="btn header-item noti-icon"

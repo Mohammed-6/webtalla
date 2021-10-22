@@ -8,7 +8,7 @@ import {
   CardTitle,
   Col,
   Form,
-  FormGroup,
+  Modal,
   Input,
   Label,
   Row,
@@ -16,8 +16,12 @@ import {
 
 import axios from "axios"
 const create = axios.create()
+import toastr from "toastr"
+import "toastr/build/toastr.min.css"
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb"
+
+import EditServiceProvider from "./EditServiceProvider"
 
 const ServiceProvider = () => {
   const [maincategory, setmaincategory] = useState("")
@@ -59,6 +63,9 @@ const ServiceProvider = () => {
   const [beforeamount, setBeforeamount] = useState("")
   const [afteramount, setAfteramount] = useState("")
   const [duration, setDuration] = useState("")
+
+  const [modal_standard, setModalStandard] = useState(false)
+  const [loading, setloading] = useState(false)
 
   const changemaincategory = e => {
     setmaincategory(e.target.value)
@@ -118,6 +125,7 @@ const ServiceProvider = () => {
       })
   }, [])
   const addProvider = () => {
+    setloading(true)
     const formData = new FormData()
     formData.append("maincategory", maincategory)
     formData.append("companyname", companyname)
@@ -161,7 +169,21 @@ const ServiceProvider = () => {
               setcity("")
               setstate("")
               setEditid("")
+              setEditdata([])
+              setEditdescription([])
+
+              setEditdata1([])
+              setEditdescription1([])
+
+              setEditdata2([])
+              setEditdescription2([])
+
+              setEditdata2([])
+              setEditdescription2([])
               setEdit(false)
+              showToast("Service provider updated successfully")
+              setModalStandard(false)
+              setloading(false)
             })
         })
     } else {
@@ -189,119 +211,29 @@ const ServiceProvider = () => {
               setcity("")
               setstate("")
               setEditid("")
+
+              setdata([])
+              setdescription([])
+              setdata1([])
+              setdescription1([])
+              setdata2([])
+              setdescription2([])
+
               setEdit(false)
+              showToast("Service provider added successfully")
+              setModalStandard(false)
+              setloading(false)
             })
         })
     }
   }
   const editProvider = (e, id) => {
-    setEditdata([])
-    setEditdescription([])
-
-    setEditdata1([])
-    setEditdescription1([])
-    create
-      .post(process.env.REACT_APP_BASEURL + "adslots/provider_index?id=" + id)
-      .then(res => {
-        // console.log(res.data.data)
-        setmaincategory(res.data.data.maincategory)
-        setcompanyname(res.data.data.companyname)
-        setemail(res.data.data.email)
-        setmobile(res.data.data.mobile)
-        setcity(res.data.data.city)
-        setstate(res.data.data.state)
-        setEditid(res.data.data.sp_id)
-        setImage(res.data.data.image)
-        setdetails(JSON.parse(res.data.data.details))
-        setEdit(true)
-
-        // details
-        const mn0 = JSON.parse(res.data.data.details)
-        mn0.map(tm => {
-          if (tm.type === "mediaoptionlabel") {
-            setMediaoptionlabel(tm.details)
-          } else if (tm.type === "mediaoption") {
-            setMediaoption(tm.details)
-          } else if (tm.type === "mediacountlabel") {
-            setMediacountlabel(tm.details)
-          } else if (tm.type === "mediacount") {
-            setMediacount(tm.details)
-          } else if (tm.type === "beforeamount") {
-            setBeforeamount(tm.details)
-          } else if (tm.type === "afteramount") {
-            setAfteramount(tm.details)
-          } else if (tm.type === "duration") {
-            setDuration(tm.details)
-          }
-        })
-
-        // data
-        const mn = JSON.parse(res.data.data.data)
-        setEditdata(JSON.parse(mn.data))
-        setEditdescription(JSON.parse(mn.data_description))
-
-        JSON.parse(mn.data).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            data: tt.data,
-          }
-          setdata(data => data.concat(col))
-        })
-
-        JSON.parse(mn.data_description).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            description: tt.description,
-          }
-          setdescription(description => description.concat(col))
-        })
-        //about
-        const mn1 = JSON.parse(res.data.data.about)
-        setEditdata1(JSON.parse(mn1.about))
-        setEditdescription1(JSON.parse(mn1.about_description))
-
-        JSON.parse(mn1.about).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            data: tt.data,
-          }
-          setdata1(data1 => data1.concat(col))
-        })
-
-        JSON.parse(mn1.about_description).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            description: tt.description,
-          }
-          setdescription1(description1 => description1.concat(col))
-        })
-        //faq
-        const mn2 = JSON.parse(res.data.data.faq)
-        setEditdata2(JSON.parse(mn2.faq))
-        setEditdescription2(JSON.parse(mn2.faq_description))
-
-        JSON.parse(mn2.faq).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            data: tt.data,
-          }
-          setdata2(data2 => data2.concat(col))
-        })
-
-        JSON.parse(mn2.faq_description).map((tt, key) => {
-          let col
-          col = {
-            key: key,
-            description: tt.description,
-          }
-          setdescription2(description2 => description2.concat(col))
-        })
-      })
+    setEdit(true)
+    setEditid(id)
+    setModalStandard(true)
+  }
+  const hideIt = () => {
+    setModalStandard(false)
   }
   const deleteProvider = (e, id) => {
     if (confirm("Are you sure you want to delete")) {
@@ -316,6 +248,7 @@ const ServiceProvider = () => {
             .then(res => {
               console.log(res.data.data)
               setAxioslist(res.data.data)
+              showToast("Service provider deleted successfully")
             })
         })
     }
@@ -524,11 +457,561 @@ const ServiceProvider = () => {
       console.log(description2)
     }
   }
+  const tog_standard = () => {
+    setModalStandard(true)
+  }
+  const showToast = msg => {
+    var toastType
+    var title = ""
+    var message = msg
+    toastr.options = {
+      positionClass: "toast-top-right",
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      closeButton: false,
+      debug: false,
+      progressBar: false,
+      preventDuplicates: false,
+      newestOnTop: true,
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      showDuration: 300,
+      hideDuration: 1000,
+    }
+
+    // setTimeout(() => toastr.success(`Settings updated `), 300)
+    //Toaster Types
+    if (toastType === "info") toastr.info(message, title)
+    else if (toastType === "warning") toastr.warning(message, title)
+    else if (toastType === "error") toastr.error(message, title)
+    else toastr.success(message, title)
+  }
   return (
     <>
+      <Modal size="xl" isOpen={modal_standard} toggle={tog_standard}>
+        <div className="card">
+          <div className="card-body">
+            <div className="card-title">
+              {edit ? "Edit" : "Add"} Service Provider
+              <div className="col-12 align-self-end col">
+                <span
+                  className="btn-close login-modal-close"
+                  onClick={() => setModalStandard(!modal_standard)}
+                  aria-label="Close"
+                ></span>
+              </div>
+            </div>
+            {edit ? (
+              <EditServiceProvider editid={editid} hideit={hideIt} />
+            ) : (
+              <>
+                <div class="mb-3 form-group">
+                  <label class="">Main Category</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changemaincategory}
+                    defaultValue={maincategory}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">Company Name</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changecompanyname}
+                    defaultValue={companyname}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">Image</label>
+                  <input
+                    type="file"
+                    class="form-control form-control"
+                    onBlur={changeImage}
+                  />
+                  <input
+                    type="hidden"
+                    class="form-control form-control"
+                    defaultValue={editid}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">Email</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changeemail}
+                    defaultValue={email}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">Mobile</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changemobile}
+                    defaultValue={mobile}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">City</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changecity}
+                    defaultValue={city}
+                  />
+                </div>
+                <div class="mb-3 form-group">
+                  <label class="">State</label>
+                  <input
+                    type="text"
+                    class="form-control form-control"
+                    onChange={changestate}
+                    defaultValue={state}
+                  />
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Media Option Label</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("mediaoptionlabel", e, 1)}
+                        defaultValue={mediaoptionlabel}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Media Option</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("mediaoption", e, 2)}
+                        defaultValue={mediaoption}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Media Count Label</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("mediacountlabel", e, 3)}
+                        defaultValue={mediacountlabel}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Media Count</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("mediacount", e, 4)}
+                        defaultValue={mediacount}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Before Amount</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("beforeamount", e, 5)}
+                        defaultValue={beforeamount}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">After Amount</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("afteramount", e, 6)}
+                        defaultValue={afteramount}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div class="mb-3 form-group">
+                      <label class="">Duration</label>
+                      <input
+                        type="text"
+                        class="form-control form-control"
+                        onChange={e => changeDetails("duration", e, 7)}
+                        defaultValue={duration}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="inner-repeater mb-4">
+                  <Label>Data :</Label>
+                  <table style={{ width: "100%" }}>
+                    <tbody>
+                      {!edit ? (
+                        <tr id="addrMain" key="">
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="12" className="col-8">
+                                <Input
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Title... 1"
+                                  onChange={e => changedata(e, 1)}
+                                />
+                              </Col>
+                            </Row>
+                          </td>
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="9" className="col-8">
+                                <Input
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Description... 1"
+                                  onChange={e => changeDescription(e, 1)}
+                                />
+                              </Col>
+                              <Col md="3" className="col-4">
+                                <Button
+                                  disabled
+                                  color="primary"
+                                  className="btn-block inner"
+                                  style={{ width: "100%" }}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              </Col>
+                            </Row>
+                          </td>
+                        </tr>
+                      ) : (
+                        ""
+                      )}
+
+                      {rows1.map((item1, idx) => {
+                        let dd =
+                          parseInt(idx) +
+                          parseInt(2) +
+                          parseInt(editdata.length)
+                        return (
+                          <tr id={"nested" + dd} key={idx + 2}>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="12" className="col-8">
+                                  <Input
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Title... " + (idx + 2 + editdata.length)
+                                    }
+                                    onChange={e =>
+                                      changedata(e, idx + 2 + editdata.length)
+                                    }
+                                  />
+                                </Col>
+                              </Row>
+                            </td>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="9" className="col-8">
+                                  <Input
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Description... " +
+                                      (idx + 2 + editdata.length)
+                                    }
+                                    onChange={e =>
+                                      changeDescription(
+                                        e,
+                                        idx + 2 + editdata.length
+                                      )
+                                    }
+                                  />
+                                </Col>
+                                <Col md="3" className="col-4">
+                                  <Button
+                                    onClick={e =>
+                                      handleRemoveRowNested(
+                                        e,
+                                        idx + 2 + editdata.length
+                                      )
+                                    }
+                                    color="primary"
+                                    className="btn-block inner"
+                                    style={{ width: "100%" }}
+                                  >
+                                    <i className="fas fa-trash"></i>
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                  <Button onClick={handleAddRowNested} color="success">
+                    Add Filter
+                  </Button>
+                </div>
+
+                <div className="inner-repeater mb-4">
+                  <Label>About :</Label>
+                  <table style={{ width: "100%" }}>
+                    <tbody>
+                      {!edit ? (
+                        <tr id="addrMain" key="">
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="12" className="col-8">
+                                <Input
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Title... 1"
+                                  onChange={e => changedata1(e, 1)}
+                                />
+                              </Col>
+                            </Row>
+                          </td>
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="9" className="col-8">
+                                <textarea
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Description... 1"
+                                  onChange={e => changeDescription1(e, 1)}
+                                />
+                              </Col>
+                              <Col md="3" className="col-4">
+                                <Button
+                                  disabled
+                                  color="primary"
+                                  className="btn-block inner"
+                                  style={{ width: "100%" }}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              </Col>
+                            </Row>
+                          </td>
+                        </tr>
+                      ) : (
+                        ""
+                      )}
+
+                      {rows2.map((item1, idx) => {
+                        let dd =
+                          parseInt(idx) +
+                          parseInt(2) +
+                          parseInt(editdata1.length)
+                        return (
+                          <tr id={"nested1" + dd} key={idx + 2}>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="12" className="col-8">
+                                  <Input
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Title... " + (idx + 2 + editdata1.length)
+                                    }
+                                    onChange={e =>
+                                      changedata1(e, idx + 2 + editdata1.length)
+                                    }
+                                  />
+                                </Col>
+                              </Row>
+                            </td>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="9" className="col-8">
+                                  <textarea
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Description... " +
+                                      (idx + 2 + editdata1.length)
+                                    }
+                                    onChange={e =>
+                                      changeDescription1(
+                                        e,
+                                        idx + 2 + editdata1.length
+                                      )
+                                    }
+                                  />
+                                </Col>
+                                <Col md="3" className="col-4">
+                                  <Button
+                                    onClick={e =>
+                                      handleRemoveRowNested1(
+                                        e,
+                                        idx + 2 + editdata1.length
+                                      )
+                                    }
+                                    color="primary"
+                                    className="btn-block inner"
+                                    style={{ width: "100%" }}
+                                  >
+                                    <i className="fas fa-trash"></i>
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                  <Button onClick={handleAddRowNested1} color="success">
+                    Add About Filter
+                  </Button>
+                </div>
+                <div className="inner-repeater mb-4">
+                  <Label>Faq :</Label>
+                  <table style={{ width: "100%" }}>
+                    <tbody>
+                      {!edit ? (
+                        <tr id="addrMain" key="">
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="12" className="col-8">
+                                <Input
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Title... 1"
+                                  onChange={e => changedata2(e, 1)}
+                                />
+                              </Col>
+                            </Row>
+                          </td>
+                          <td>
+                            <Row className="inner mb-3 ">
+                              <Col md="9" className="col-8">
+                                <textarea
+                                  type="text"
+                                  className="inner form-control"
+                                  placeholder="Description... 1"
+                                  onChange={e => changeDescription2(e, 1)}
+                                />
+                              </Col>
+                              <Col md="3" className="col-4">
+                                <Button
+                                  disabled
+                                  color="primary"
+                                  className="btn-block inner"
+                                  style={{ width: "100%" }}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              </Col>
+                            </Row>
+                          </td>
+                        </tr>
+                      ) : (
+                        ""
+                      )}
+
+                      {rows3.map((item1, idx) => {
+                        let dd =
+                          parseInt(idx) +
+                          parseInt(2) +
+                          parseInt(editdata2.length)
+                        return (
+                          <tr id={"nested2" + dd} key={idx + 2}>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="12" className="col-8">
+                                  <Input
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Title... " + (idx + 2 + editdata2.length)
+                                    }
+                                    onChange={e =>
+                                      changedata2(e, idx + 2 + editdata2.length)
+                                    }
+                                  />
+                                </Col>
+                              </Row>
+                            </td>
+                            <td>
+                              <Row className="inner mb-3">
+                                <Col md="9" className="col-8">
+                                  <textarea
+                                    type="text"
+                                    className="inner form-control"
+                                    placeholder={
+                                      "Description... " +
+                                      (idx + 2 + editdata2.length)
+                                    }
+                                    onChange={e =>
+                                      changeDescription2(
+                                        e,
+                                        idx + 2 + editdata2.length
+                                      )
+                                    }
+                                  />
+                                </Col>
+                                <Col md="3" className="col-4">
+                                  <Button
+                                    onClick={e =>
+                                      handleRemoveRowNested2(
+                                        e,
+                                        idx + 2 + editdata2.length
+                                      )
+                                    }
+                                    color="primary"
+                                    className="btn-block inner"
+                                    style={{ width: "100%" }}
+                                  >
+                                    <i className="fas fa-trash"></i>
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                  <Button onClick={handleAddRowNested2} color="success">
+                    Add Faq Filter
+                  </Button>
+                </div>
+                <div>
+                  {loading ? (
+                    <div
+                      className="spinner-border text-primary text-center m-1"
+                      role="status"
+                    >
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  ) : (
+                    <a className="btn btn-primary" onClick={addProvider}>
+                      Submit
+                    </a>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </Modal>
       <div className="page-content">
         <MetaTags>
-          <title>Provider</title>
+          <title>Service Provider</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs
@@ -539,7 +1022,22 @@ const ServiceProvider = () => {
             <div className="col-md-12">
               <div className="card">
                 <div className="card-body">
-                  <div className="card-title">Service Provider List</div>
+                  <div class="mb-2 row">
+                    <div class="col-sm-4">
+                      <h4>Service Provider List</h4>
+                    </div>
+                    <div class="col-sm-8">
+                      <div class="text-sm-end">
+                        <span
+                          class="btn-rounded mb-2 me-2 btn btn-success"
+                          onClick={() => setModalStandard(true)}
+                        >
+                          <i class="mdi mdi-plus me-1"></i> Add New Service
+                          Provider
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <table className="table table-bordered table-hover">
                     <thead>
                       <tr>
@@ -581,702 +1079,7 @@ const ServiceProvider = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="card-title">
-                    {edit ? "Edit" : "Add"} Service Provider
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">Main Category</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changemaincategory}
-                      defaultValue={maincategory}
-                    />
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">Company Name</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changecompanyname}
-                      defaultValue={companyname}
-                    />
-                  </div>
-                  {edit ? (
-                    <div class="mb-3 form-group">
-                      <label class="">Previous Image</label>
-                      <br />
-                      <img
-                        src={
-                          process.env.REACT_APP_BASEURL +
-                          "assets/images/provider-images/" +
-                          image
-                        }
-                        height="60"
-                      />
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  <div class="mb-3 form-group">
-                    <label class="">Image</label>
-                    <input
-                      type="file"
-                      class="form-control form-control"
-                      onBlur={changeImage}
-                    />
-                    <input
-                      type="hidden"
-                      class="form-control form-control"
-                      defaultValue={editid}
-                    />
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">Email</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changeemail}
-                      defaultValue={email}
-                    />
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">Mobile</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changemobile}
-                      defaultValue={mobile}
-                    />
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">City</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changecity}
-                      defaultValue={city}
-                    />
-                  </div>
-                  <div class="mb-3 form-group">
-                    <label class="">State</label>
-                    <input
-                      type="text"
-                      class="form-control form-control"
-                      onChange={changestate}
-                      defaultValue={state}
-                    />
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Media Option Label</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e =>
-                            changeDetails("mediaoptionlabel", e, 1)
-                          }
-                          defaultValue={mediaoptionlabel}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Media Option</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("mediaoption", e, 2)}
-                          defaultValue={mediaoption}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Media Count Label</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("mediacountlabel", e, 3)}
-                          defaultValue={mediacountlabel}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Media Count</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("mediacount", e, 4)}
-                          defaultValue={mediacount}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Before Amount</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("beforeamount", e, 5)}
-                          defaultValue={beforeamount}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">After Amount</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("afteramount", e, 6)}
-                          defaultValue={afteramount}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div class="mb-3 form-group">
-                        <label class="">Duration</label>
-                        <input
-                          type="text"
-                          class="form-control form-control"
-                          onChange={e => changeDetails("duration", e, 7)}
-                          defaultValue={duration}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* data */}
-                  <div className="inner-repeater mb-4">
-                    <Label>Data :</Label>
-                    <table style={{ width: "100%" }}>
-                      <tbody>
-                        {!edit ? (
-                          <tr id="addrMain" key="">
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="12" className="col-8">
-                                  <Input
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Title... 1"
-                                    onChange={e => changedata(e, 1)}
-                                  />
-                                </Col>
-                              </Row>
-                            </td>
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="9" className="col-8">
-                                  <Input
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Description... 1"
-                                    onChange={e => changeDescription(e, 1)}
-                                  />
-                                </Col>
-                                <Col md="3" className="col-4">
-                                  <Button
-                                    disabled
-                                    color="primary"
-                                    className="btn-block inner"
-                                    style={{ width: "100%" }}
-                                  >
-                                    <i className="fas fa-trash"></i>
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </td>
-                          </tr>
-                        ) : (
-                          ""
-                        )}
-                        {edit
-                          ? editdata.map((itm, idx) => {
-                              let desc = ""
-                              editdescription.map(ll => {
-                                if (itm.key == ll.key) {
-                                  desc = ll.description
-                                }
-                              })
-                              return (
-                                <>
-                                  <tr id={"nested" + idx} key={idx}>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="12" className="col-8">
-                                          <Input
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={"Title... " + idx}
-                                            onChange={e => changedata(e, idx)}
-                                            defaultValue={itm.data}
-                                          />
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="9" className="col-8">
-                                          <Input
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={
-                                              "Description... " + idx
-                                            }
-                                            onChange={e =>
-                                              changeDescription(e, idx)
-                                            }
-                                            defaultValue={desc}
-                                          />
-                                        </Col>
-                                        <Col md="3" className="col-4">
-                                          <Button
-                                            onClick={e =>
-                                              handleRemoveRowNested(e, idx)
-                                            }
-                                            color="primary"
-                                            className="btn-block inner"
-                                            style={{ width: "100%" }}
-                                          >
-                                            <i className="fas fa-trash"></i>
-                                          </Button>
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                  </tr>
-                                </>
-                              )
-                            })
-                          : ""}
-                        {rows1.map((item1, idx) => {
-                          let dd =
-                            parseInt(idx) +
-                            parseInt(2) +
-                            parseInt(editdata.length)
-                          return (
-                            <tr id={"nested" + dd} key={idx + 2}>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="12" className="col-8">
-                                    <Input
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Title... " +
-                                        (idx + 2 + editdata.length)
-                                      }
-                                      onChange={e =>
-                                        changedata(e, idx + 2 + editdata.length)
-                                      }
-                                    />
-                                  </Col>
-                                </Row>
-                              </td>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="9" className="col-8">
-                                    <Input
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Description... " +
-                                        (idx + 2 + editdata.length)
-                                      }
-                                      onChange={e =>
-                                        changeDescription(
-                                          e,
-                                          idx + 2 + editdata.length
-                                        )
-                                      }
-                                    />
-                                  </Col>
-                                  <Col md="3" className="col-4">
-                                    <Button
-                                      onClick={e =>
-                                        handleRemoveRowNested(
-                                          e,
-                                          idx + 2 + editdata.length
-                                        )
-                                      }
-                                      color="primary"
-                                      className="btn-block inner"
-                                      style={{ width: "100%" }}
-                                    >
-                                      <i className="fas fa-trash"></i>
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </td>
-                            </tr>
-                          )
-                        })}
-                      </tbody>
-                    </table>
-                    <Button onClick={handleAddRowNested} color="success">
-                      Add Filter
-                    </Button>
-                  </div>
-
-                  {/* about */}
-                  <div className="inner-repeater mb-4">
-                    <Label>About :</Label>
-                    <table style={{ width: "100%" }}>
-                      <tbody>
-                        {!edit ? (
-                          <tr id="addrMain" key="">
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="12" className="col-8">
-                                  <Input
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Title... 1"
-                                    onChange={e => changedata1(e, 1)}
-                                  />
-                                </Col>
-                              </Row>
-                            </td>
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="9" className="col-8">
-                                  <textarea
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Description... 1"
-                                    onChange={e => changeDescription1(e, 1)}
-                                  />
-                                </Col>
-                                <Col md="3" className="col-4">
-                                  <Button
-                                    disabled
-                                    color="primary"
-                                    className="btn-block inner"
-                                    style={{ width: "100%" }}
-                                  >
-                                    <i className="fas fa-trash"></i>
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </td>
-                          </tr>
-                        ) : (
-                          ""
-                        )}
-                        {edit
-                          ? editdata1.map((itm, idx) => {
-                              let desc = ""
-                              editdescription1.map(ll => {
-                                if (itm.key == ll.key) {
-                                  desc = ll.description
-                                }
-                              })
-                              return (
-                                <>
-                                  <tr id={"nested1" + idx} key={idx}>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="12" className="col-8">
-                                          <Input
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={"Title... " + idx}
-                                            onChange={e => changedata1(e, idx)}
-                                            defaultValue={itm.data}
-                                          />
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="9" className="col-8">
-                                          <textarea
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={
-                                              "Description... " + idx
-                                            }
-                                            onChange={e =>
-                                              changeDescription1(e, idx)
-                                            }
-                                            defaultValue={desc}
-                                          ></textarea>
-                                        </Col>
-                                        <Col md="3" className="col-4">
-                                          <Button
-                                            onClick={e =>
-                                              handleRemoveRowNested1(e, idx)
-                                            }
-                                            color="primary"
-                                            className="btn-block inner"
-                                            style={{ width: "100%" }}
-                                          >
-                                            <i className="fas fa-trash"></i>
-                                          </Button>
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                  </tr>
-                                </>
-                              )
-                            })
-                          : ""}
-                        {rows2.map((item1, idx) => {
-                          let dd =
-                            parseInt(idx) +
-                            parseInt(2) +
-                            parseInt(editdata1.length)
-                          return (
-                            <tr id={"nested1" + dd} key={idx + 2}>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="12" className="col-8">
-                                    <Input
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Title... " +
-                                        (idx + 2 + editdata1.length)
-                                      }
-                                      onChange={e =>
-                                        changedata1(
-                                          e,
-                                          idx + 2 + editdata1.length
-                                        )
-                                      }
-                                    />
-                                  </Col>
-                                </Row>
-                              </td>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="9" className="col-8">
-                                    <textarea
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Description... " +
-                                        (idx + 2 + editdata1.length)
-                                      }
-                                      onChange={e =>
-                                        changeDescription1(
-                                          e,
-                                          idx + 2 + editdata1.length
-                                        )
-                                      }
-                                    />
-                                  </Col>
-                                  <Col md="3" className="col-4">
-                                    <Button
-                                      onClick={e =>
-                                        handleRemoveRowNested1(
-                                          e,
-                                          idx + 2 + editdata1.length
-                                        )
-                                      }
-                                      color="primary"
-                                      className="btn-block inner"
-                                      style={{ width: "100%" }}
-                                    >
-                                      <i className="fas fa-trash"></i>
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </td>
-                            </tr>
-                          )
-                        })}
-                      </tbody>
-                    </table>
-                    <Button onClick={handleAddRowNested1} color="success">
-                      Add About Filter
-                    </Button>
-                  </div>
-                  {/* faq */}
-                  <div className="inner-repeater mb-4">
-                    <Label>Faq :</Label>
-                    <table style={{ width: "100%" }}>
-                      <tbody>
-                        {!edit ? (
-                          <tr id="addrMain" key="">
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="12" className="col-8">
-                                  <Input
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Title... 1"
-                                    onChange={e => changedata2(e, 1)}
-                                  />
-                                </Col>
-                              </Row>
-                            </td>
-                            <td>
-                              <Row className="inner mb-3 ">
-                                <Col md="9" className="col-8">
-                                  <textarea
-                                    type="text"
-                                    className="inner form-control"
-                                    placeholder="Description... 1"
-                                    onChange={e => changeDescription2(e, 1)}
-                                  />
-                                </Col>
-                                <Col md="3" className="col-4">
-                                  <Button
-                                    disabled
-                                    color="primary"
-                                    className="btn-block inner"
-                                    style={{ width: "100%" }}
-                                  >
-                                    <i className="fas fa-trash"></i>
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </td>
-                          </tr>
-                        ) : (
-                          ""
-                        )}
-                        {edit
-                          ? editdata2.map((itm, idx) => {
-                              let desc = ""
-                              editdescription2.map(ll => {
-                                if (itm.key == ll.key) {
-                                  desc = ll.description
-                                }
-                              })
-                              return (
-                                <>
-                                  <tr id={"nested2" + idx} key={idx}>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="12" className="col-8">
-                                          <Input
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={"Title... " + idx}
-                                            onChange={e => changedata2(e, idx)}
-                                            defaultValue={itm.data}
-                                          />
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                    <td>
-                                      <Row className="inner mb-3">
-                                        <Col md="9" className="col-8">
-                                          <textarea
-                                            type="text"
-                                            className="inner form-control"
-                                            placeholder={
-                                              "Description... " + idx
-                                            }
-                                            onChange={e =>
-                                              changeDescription2(e, idx)
-                                            }
-                                            defaultValue={desc}
-                                          ></textarea>
-                                        </Col>
-                                        <Col md="3" className="col-4">
-                                          <Button
-                                            onClick={e =>
-                                              handleRemoveRowNested2(e, idx)
-                                            }
-                                            color="primary"
-                                            className="btn-block inner"
-                                            style={{ width: "100%" }}
-                                          >
-                                            <i className="fas fa-trash"></i>
-                                          </Button>
-                                        </Col>
-                                      </Row>
-                                    </td>
-                                  </tr>
-                                </>
-                              )
-                            })
-                          : ""}
-                        {rows3.map((item1, idx) => {
-                          let dd =
-                            parseInt(idx) +
-                            parseInt(2) +
-                            parseInt(editdata2.length)
-                          return (
-                            <tr id={"nested2" + dd} key={idx + 2}>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="12" className="col-8">
-                                    <Input
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Title... " +
-                                        (idx + 2 + editdata2.length)
-                                      }
-                                      onChange={e =>
-                                        changedata2(
-                                          e,
-                                          idx + 2 + editdata2.length
-                                        )
-                                      }
-                                    />
-                                  </Col>
-                                </Row>
-                              </td>
-                              <td>
-                                <Row className="inner mb-3">
-                                  <Col md="9" className="col-8">
-                                    <textarea
-                                      type="text"
-                                      className="inner form-control"
-                                      placeholder={
-                                        "Description... " +
-                                        (idx + 2 + editdata2.length)
-                                      }
-                                      onChange={e =>
-                                        changeDescription2(
-                                          e,
-                                          idx + 2 + editdata2.length
-                                        )
-                                      }
-                                    />
-                                  </Col>
-                                  <Col md="3" className="col-4">
-                                    <Button
-                                      onClick={e =>
-                                        handleRemoveRowNested2(
-                                          e,
-                                          idx + 2 + editdata2.length
-                                        )
-                                      }
-                                      color="primary"
-                                      className="btn-block inner"
-                                      style={{ width: "100%" }}
-                                    >
-                                      <i className="fas fa-trash"></i>
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </td>
-                            </tr>
-                          )
-                        })}
-                      </tbody>
-                    </table>
-                    <Button onClick={handleAddRowNested2} color="success">
-                      Add Faq Filter
-                    </Button>
-                  </div>
-                  <a className="btn btn-primary" onClick={addProvider}>
-                    Submit
-                  </a>
-                </div>
-              </div>
-            </div>
+            <div className="col-md-12"></div>
           </div>
         </Container>
       </div>

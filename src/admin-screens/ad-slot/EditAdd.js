@@ -32,7 +32,9 @@ const responsive = {
     items: 1,
   },
 }
-const EditAd = () => {
+import toastr from "toastr"
+import "toastr/build/toastr.min.css"
+const EditAd = props => {
   const [mediavertical, setmediavertical] = useState("")
   const [adsprovider, setadsprovider] = useState("")
   const [adname, setadname] = useState("")
@@ -261,7 +263,8 @@ const EditAd = () => {
       )
       .then(res => {
         console.log(res)
-        window.location.replace("/admin/ads")
+        showToast()
+        props.history.push("/admin/ads")
       })
   }
   const deleteImage = aa => {
@@ -282,6 +285,34 @@ const EditAd = () => {
         console.log(res)
         setattachments(JSON.parse(res.data.data.attachments))
       })
+  }
+  const showToast = () => {
+    var toastType
+    var title = ""
+    var message = "Ads updated successfully."
+    toastr.options = {
+      positionClass: "toast-top-right",
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      closeButton: false,
+      debug: false,
+      progressBar: false,
+      preventDuplicates: false,
+      newestOnTop: true,
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      showDuration: 300,
+      hideDuration: 1000,
+    }
+
+    // setTimeout(() => toastr.success(`Settings updated `), 300)
+    //Toaster Types
+    if (toastType === "info") toastr.info(message, title)
+    else if (toastType === "warning") toastr.warning(message, title)
+    else if (toastType === "error") toastr.error(message, title)
+    else toastr.success(message, title)
   }
   return (
     <>

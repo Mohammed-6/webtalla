@@ -58,6 +58,7 @@ const Cart = props => {
   const tog_standard = () => {
     setModalStandard(!modal_standard)
   }
+  let amt = 0
   return (
     <>
       <Index />
@@ -78,7 +79,7 @@ const Cart = props => {
         </div>
         <div class="modal-body">
           <p class="mb-2">
-            Product id: <span class="text-primary">#{orderunique}</span>
+            Order id: <span class="text-primary">#{orderunique}</span>
           </p>
           <div class="table-responsive">
             <table class="table align-middle table-nowrap table">
@@ -92,6 +93,7 @@ const Cart = props => {
               <tbody>
                 {ordd.map(ord => {
                   const dd = JSON.parse(ord.product_details)
+                  amt += parseInt(dd.rates)
                   return (
                     <tr>
                       <th scope="row">
@@ -128,6 +130,7 @@ const Cart = props => {
                 {ordd.map((ord, kl) => {
                   const dd = JSON.parse(ord.amount)
                   if (kl == 0) {
+                    const ll = (7.5 / 100) * amt
                     return (
                       <>
                         <tr>
@@ -135,6 +138,12 @@ const Cart = props => {
                             <h6 class="m-0 text-end">Sub Total:</h6>
                           </td>
                           <td>₦ {dd}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <h6 class="m-0 text-end">VAT(7.5%):</h6>
+                          </td>
+                          <td>₦ {ll.toFixed(2)}</td>
                         </tr>
                         <tr>
                           <td colspan="2">

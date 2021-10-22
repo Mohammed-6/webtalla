@@ -1078,6 +1078,7 @@ button.navbar-toggler {
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1em;
+  padding-top: 40px;
 }
 .os-title span {
   color: #fc0841;
@@ -1105,7 +1106,7 @@ button.navbar-toggler {
   font-weight: 600;
 }
 .expert-section {
-  height: 70vh;
+  height: auto;
   background: url(../front-assets/images/bg-a.png);
   background-position: center center;
   background-repeat: no-repeat;
@@ -1119,13 +1120,13 @@ button.navbar-toggler {
   text-transform: uppercase;
   line-height: 1em;
   text-align: right;
-  padding-top: 20vh;
+  padding: 0 20vh;
   width: 50%;
   margin-left: 40%;
 }
 
 .expert-assist {
-  height: 70vh;
+  height: auto;
   background: url(../front-assets/images/bg-prgress.jpg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -1264,7 +1265,7 @@ body {
   background-color: #e2e2e2;
   color: black;
   padding: 50px 10px 20px 10px;
-  border: 8px solid #ffde16;
+  border: 8px solid green;
 }
 .contact-form h2 {
   margin: 0px 0px 0px 0px;
@@ -1295,15 +1296,22 @@ body {
 .submit-btn {
   font-size: 18px;
   margin-top: 10px;
-  color: #111;
+  color: white;
   padding: 10px 39px;
-  background-color: #f7dd0c;
+  background-color: green;
   border-radius: 0;
   text-decoration: none !important;
   border: 0;
 }
 footer {
   padding: 50px;
+  background: rgb(0, 128, 0);
+  background: linear-gradient(
+    270deg,
+    rgba(0, 128, 0, 0.5) 35%,
+    rgba(0, 0, 255, 0.5) 100%
+  );
+  color: black;
 }
 .footer-social {
   margin: 0;
@@ -1674,7 +1682,7 @@ p {
   margin: 0px 0px 20px 0px;
 }
 .wcu-heading--title {
-  margin: 0px 0px 60px 0px;
+  margin: 0px 0px 15px 0px;
   font-size: 60px;
   font-weight: 900;
   text-transform: uppercase;
@@ -1810,7 +1818,7 @@ p {
   background: #f7f7f7;
 }
 .clients-page {
-  padding-top: 120px;
+  padding-top: 50px;
 }
 .career-page {
   padding-top: 30px;
@@ -1820,15 +1828,19 @@ p {
   margin-bottom: 30px;
 }
 .contact-page {
-  padding-top: 200px;
-  background-image: url(https://outdoormediabuyers.com/wp-content/themes/omb/images/contact-bg.png);
+  padding-top: 20px;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ),
+    url(../front-assets/images/contact-banner.jpg);
   background-position: top center;
   height: 100%;
   background-repeat: no-repeat;
   background-color: white;
 }
 .contact-info > i {
-  color: rgba(255, 238, 0, 0.692);
+  color: green;
   font-size: 75px;
 }
 .contact-info p {
@@ -1876,6 +1888,9 @@ p {
   font-size: 16px;
   padding: 10px;
 }
+.side-menu ul li a:hover {
+  color: #b5b5b5;
+}
 .sidebar ul p {
   color: #fff;
   padding: 10px;
@@ -1912,7 +1927,7 @@ li a.dropdown-toggle::after {
 .side-menu {
   overflow-y: scroll;
   position: absolute;
-  background: #0fb7f9;
+  background: #495057;
   z-index: 6;
   height: 100vh;
   min-width: 250px;
@@ -1982,7 +1997,7 @@ li a.dropdown-toggle::after {
 
 @media only screen and (max-width: 500px) {
   body {
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   .content.is-open {
@@ -2135,6 +2150,7 @@ section.map_section > div.offset-md-3 > form > div.form-field > label {
   width: auto;
 }
 .data-div-child {
+  color: black;
   padding: 16px;
 }
 
@@ -2198,4 +2214,201 @@ section.map_section > div.offset-md-3 > form > div.form-field > label {
   width: 500vh;
   height: 100vh;
   z-index: 5;
+}
+@media (max-width: 768px) {
+  .os-title {
+    color: #161619;
+    margin: 200px 0px 0px 0px;
+    font-size: 60px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1em;
+    position: unset;
+  }
+}
+.career-form label {
+  margin-top: 0.5rem;
+  margin-bottom: 0 !important;
+}
+.career-form h2 {
+  margin-top: 1rem;
+  margin-bottom: 0 !important;
+}
+.contact-form .con-form-control {
+  display: block;
+  width: 100%;
+  padding: 0.47rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.contact-form input[type="text"],
+select {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+.contact-form .invalid-feedback {
+  margin: 0;
+}
+.uservices {
+  height: auto;
+  max-height: 1080px;
+  align-items: center;
+  background: #d7d7d7;
+}
+.uservices-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+}
+.us-card-body {
+  padding: 10px;
+  transition: all 100ms ease-in;
+}
+.us-card-body hr {
+  color: #666;
+  display: block;
+  position: relative;
+  text-align: center;
+  transition: all 100ms ease-in;
+}
+.us-card-body:hover {
+  color: #2196f3;
+  transform: scale(1.03);
+}
+@media (max-width: 500px) {
+  body {
+    overflow-x: hidden;
+  }
+  .dyn-banner-image img {
+    width: 100%;
+  }
+  .dyn-pnt-one {
+    border: 0px;
+  }
+  .dyn-pnt-two {
+    border: 0px;
+  }
+  .dyn-pnt-three {
+    border: 0px;
+  }
+  .dyn-pnt-four {
+    border: 0px;
+  }
+  .payment-icons {
+    width: auto;
+    padding: 10px 0;
+    overflow: auto;
+  }
+  .contact-section {
+    width: 100%;
+  }
+  .dyn-points {
+    text-align: center;
+  }
+  .uservices {
+    height: auto;
+    max-height: unset;
+  }
+  .expert-caption {
+    padding-top: 0vh;
+    width: 30%;
+    margin-left: 5%;
+    padding: 0 5vh;
+  }
+  .react-multiple-carousel__arrow {
+    z-index: unset;
+  }
+  .about-section img {
+    width: 100%;
+  }
+  .tmnl-text {
+    margin: 50px 4px 0px 0;
+    font-size: 40px;
+  }
+  .expert-assist {
+    height: auto;
+  }
+  .expert-section {
+    height: auto;
+    padding: 50px 0;
+  }
+  .faqs h2 {
+    font-size: 35px;
+  }
+}
+@media only screen and (min-width: 991px) {
+  .nav-custom-container .nav-right-content {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1425px) {
+  .expert-caption {
+    height: auto;
+    padding-top: 5vh;
+  }
+  .expert-assist {
+    height: auto;
+  }
+}
+@media (max-width: 1025px) {
+  .expert-caption {
+    padding-top: 5vh;
+  }
+  .nav-custom .nav-right-content .icon-part {
+    display: block;
+  }
+  .header .navbar-container .main-menu > li {
+    padding: 0 5px;
+  }
+  .header-transparent .navbar-container #bizcoxx_main_menu {
+    justify-content: unset;
+    padding-left: 10px;
+  }
+}
+@media (max-width: 300px) {
+  .os-title {
+    margin: 330px 0px 0px 0px;
+    font-size: 30px;
+  }
+  .expert-caption {
+    font-size: 35px;
+  }
+  .first-intro {
+    font-size: 20px;
+    line-height: 25px;
+  }
+  .second-intro {
+    font-size: 20px;
+    line-height: 25px;
+  }
+}
+.career-banner {
+  background: rgb(102 51 181 / 35%);
+}
+.sp-about ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.sp-about ul li {
+  display: flex;
+  font-size: 16px;
+}
+.sp-about ul li:hover {
+  cursor: pointer;
+}
+.sections-menu {
+  position: sticky;
+  top: 75px;
+  padding-bottom: 5px;
 }

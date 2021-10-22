@@ -40,7 +40,7 @@ class Sidebar extends Component {
                 <img src={logoLightSvg} alt="" height="22" />
               </span>
               <span className="logo-lg">
-                <img src={logoLightPng} alt="" height="19" />
+                <img src={logoLightPng} alt="" height="40" />
               </span>
             </Link>
           </div>

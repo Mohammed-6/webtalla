@@ -28,7 +28,7 @@ const TermsCondition = props => {
             <div class="col-md-12 text-center">
               <div class="page-title-box d-block align-items-center justify-content-between">
                 <h4 class="mb-1 font-size-18 text-center text-white">
-                  Services
+                  Terms and Conditions
                 </h4>
                 <div class="page-title-right">
                   <nav class="">
@@ -40,7 +40,7 @@ const TermsCondition = props => {
                       </li>
                       <li class="active breadcrumb-item" aria-current="page">
                         <Link to="" className="text-white">
-                          Services
+                          Terms and Conditions
                         </Link>
                       </li>
                     </ol>
@@ -54,23 +54,23 @@ const TermsCondition = props => {
       <div className="cancellation-page">
         <div className="container">
           <h2 className="mb-5 text-center">Terms & Conditions</h2>
-          <p>
+          <p align="justify">
             <h4>Cancellation</h4>
             <p>
-              Welcome to https://www.webtalla.com (“webtalla/ Site”). These are
+              Welcome to https://www.WebTalla.com (“WebTalla/ Site”). These are
               the terms and conditions leading your use of the Website (“herein
               after referred to as Acceptable Use Policy “AUP”). By accessing
-              Web Talla either through the website or any other electronic
+              WebTalla either through the website or any other electronic
               device, you acknowledge, accept and agree to the following terms
               and conditions of the Acceptable Use Policy (AUP), which are
-              intended to make sure that Web Talla works for everyone. This AUP
-              is helpful from the time you log in to Web Talla. By accepting
-              this Terms and Conditions, you are also accepting and agreeing to
-              be bound by the Privacy Policy and the FAQ.
+              intended to make sure that WebTalla works for everyone. This AUP
+              is helpful from the time you log in to WebTalla. By accepting this
+              Terms and Conditions, you are also accepting and agreeing to be
+              bound by the Privacy Policy and the FAQ.
             </p>
-            <h4>Accessing webtalla.com:</h4>
+            <h4>Accessing WebTalla.com:</h4>
             <p>
-              You (User) understand and agree that www.webtalla.com is an
+              You (User) understand and agree that www.WebTalla.com is an
               internet enabled electronic platform that facilitates
               communication for the purposes of Outdoor advertising and
               distributing information pertaining to radio, television,
@@ -90,7 +90,7 @@ const TermsCondition = props => {
               our Privacy Policy before doing any activity on our site.
               <br />
               <br />
-              While making use of Web Talla and other services such as the
+              While making use of WebTalla and other services such as the
               discussion forums, comments and feedback and other services
               interalia, you will post in the fitting category or area and you
               agree that your use of the Website Site shall be strictly governed
@@ -135,21 +135,21 @@ const TermsCondition = props => {
                 Indecent Representation of Women (Prohibition) Act <br />• shall
                 not allocate or contain spam, multiple / chain letters, or
                 pyramid schemes in any of its forms. <br />• shall not issue
-                viruses or any other technologies that may harm web talla users
+                viruses or any other technologies that may harm WebTalla users
                 or impose an unreasonable load on the infrastructure or
-                interfere with the proper working of www.webtalla.com. <br />•
+                interfere with the proper working of www.WebTalla.com. <br />•
                 Shall not, indirectly or directly, attempt, offer, to offer,
                 trade or attempt to trade in any boards and services, the
                 dealing of which is prohibited or controlled in any manner under
                 the provisions of any applicable law, rule, regulation or
                 principle for the time being in force. <br />• shall not be
                 placed in an incorrect category or in an wrong area of the site.{" "}
-                <br />• shall not be placed in any other www.webtalla.com site
+                <br />• shall not be placed in any other www.WebTalla.com site
                 except on the site that relates to the city in which you are
                 located. <br />• shall not list or post or be valid to
                 information that is either barred or restricted under the laws
                 of the Nigeria and such posting, boards ad Space online booking,
-                media listing, or information shall not violate www.webtalla.com
+                media listing, or information shall not violate www.WebTalla.com
                 Privacy Policy. <br />• You approval to accept communications by
                 call or email by such other mode of communication, electronic or
                 otherwise related to the advertising services provided through
@@ -169,22 +169,22 @@ const TermsCondition = props => {
                 by you.
               </div>
               You agree that your listing, posting and / or Information: if you
-              use the Site by registering on the Our webtalla.com web site, you
+              use the Site by registering on the Our WebTalla.com web site, you
               are sole responsible for maintaining the secrecy of your Login
               User ID, Password, email address and for restricting access to
-              your computer, computer network and your www.webtalla.com account,
+              your computer, computer network and your www.WebTalla.com account,
               and you are liable for all activities that occur under your User
               ID and password. If you contact our Site using any electronic tool
               other than by registration on the Site, the AUP remains applicable
               to you in the same manner as if you are a registered user on the
               Site.
             </p>
-            <h4>Web Talla Inventory Content:</h4>
+            <h4>WebTalla Inventory Content:</h4>
             <p>
-              Webtalla.com website contains content which includes Your
-              Information, Web Talla’s information and in turn from other users.
+              WebTalla.com website contains content which includes Your
+              Information, WebTalla’s information and in turn from other users.
               You agree not to distribute, modify, copy, or such content (other
-              than Your Personal or Inventory Information), Web Talla’s
+              than Your Personal or Inventory Information), WebTalla’s
               copyrights or trademarks. When you give us any information as part
               of Your content, you are granting us a irrevocable, perpetual,
               worldwide, non-exclusive, royalty-free, sub-licensable right and
@@ -195,17 +195,17 @@ const TermsCondition = props => {
               rights with respect to the information in your content in order to
               host and show your content. If you believe that there is a breach,
               check our Privacy Policy and Click on DMCA copy right Icon at the
-              footer of Web Talla Home page.
+              footer of WebTalla Home page.
             </p>
             <p>
               We reserve the right to delete any such content where we have
               grounds for suspecting the destruction of these terms and our
               Privacy Policy or of any party’s rights., please notify us by
-              clicking here support@webtalla.com
+              clicking here support@WebTalla.com
             </p>
             <h4>Liability Conditions:</h4>
             <p>
-              You agree not to hold www.webtalla.com or any of its agencies,
+              You agree not to hold www.WebTalla.com or any of its agencies,
               employees, officers, Clients responsible or responsible for any of
               your media listing, review postings or information and nor shall
               we, our team, employees or agencies be liable for any misuse,
@@ -221,7 +221,7 @@ const TermsCondition = props => {
               You understand and have the same opinion that we do not assurance
               the accuracy or authority of any Outdoor advertising boards
               information, Media listing, posting and information by other
-              users. You further agree that Web Talla not liable for any loss of
+              users. You further agree that WebTalla not liable for any loss of
               reputation, money, goodwill or any special, indirect, or important
               damages arising out of your use of the website or as a result of
               any booking, sale, purchase of Outdoor Advertising services and
@@ -241,7 +241,7 @@ const TermsCondition = props => {
               or any person acting on your behalf, access to the Site.
             </p>
             <p>
-              Web Talla is an advertising company servicing the Hoardings,
+              WebTalla is an advertising company servicing the Hoardings,
               digital ad & Billboard ads marketplace, translating the
               traditional Hoarding advertising world into data-driven solutions,
               powered by the leading outdoor advertising platform.

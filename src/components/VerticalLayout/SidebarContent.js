@@ -110,22 +110,32 @@ class SidebarContent extends Component {
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="menu-title">{this.props.t("Menu")}</li>
               <li>
-                <Link to="/#">
+                <Link to="/dashboard">
                   <i className="bx bx-home-circle" />
-                  <span className="badge rounded-pill bg-info float-end">
-                    04
-                  </span>
-                  <span>{this.props.t("Dashboards")}</span>
+                  <span>{this.props.t("Dashboard")}</span>
                 </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/dashboard">{this.props.t("Default")}</Link>
-                  </li>
-                </ul>
               </li>
 
-              <li className="menu-title">{this.props.t("Apps")}</li>
+              <li className="menu-title">{this.props.t("Links")}</li>
+              <li>
+                <Link to="/admin/users" className=" ">
+                  <i className="fas fa-users"></i>
+                  <span>{this.props.t("Users")}</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/calendar" className=" ">
+                  <i className="bx bx-calendar"></i>
+                  <span>{this.props.t("Calendar")}</span>
+                </Link>
+              </li>
 
+              <li>
+                <Link to="/admin/chat" className="">
+                  <i className="bx bx-chat"></i>
+                  <span>{this.props.t("Chat")}</span>
+                </Link>
+              </li>
               <li>
                 <Link to="/#" className="has-arrow">
                   <i className="bx bx-share-alt" />
@@ -145,6 +155,47 @@ class SidebarContent extends Component {
                   <li>
                     <Link to="/admin/ads">{this.props.t("Ads")}</Link>
                   </li>
+                </ul>
+              </li>
+
+              <li>
+                <Link to="/#" className="has-arrow ">
+                  <i className="bx bx-receipt"></i>
+                  <span>{this.props.t("Invoices")}</span>
+                </Link>
+                <ul className="sub-menu" aria-expanded="false">
+                  <li>
+                    <Link to="/admin/invoices-list">
+                      {this.props.t("Invoice List")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/admin/orders">{this.props.t("Orders")}</Link>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <Link to="/#" className="has-arrow ">
+                  <i className="bx bxs-user-detail"></i>
+                  <span>{this.props.t("Customers")}</span>
+                </Link>
+                <ul className="sub-menu" aria-expanded="false">
+                  <li>
+                    <Link to="/admin/contacts-list">
+                      {this.props.t("Customer List")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/admin/contacts-grid">
+                      {this.props.t("Customer Grid")}
+                    </Link>
+                  </li>
+                  {/* <li>
+                    <Link to="/admin/contacts-profile">
+                      {this.props.t("Profile")}
+                    </Link>
+                  </li> */}
                 </ul>
               </li>
             </ul>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 
 import Header from "../Header"
@@ -8,6 +8,9 @@ import Pimage from "../../assets/front-assets/images/partners.jpg"
 import { AvField, AvForm } from "availity-reactstrap-validation"
 
 import BG from "../../assets/front-assets/images/agency_partner.png"
+
+const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
+
 const Partners = props => {
   // forget password
   const [aname, setaname] = useState("")
@@ -54,7 +57,8 @@ const Partners = props => {
       err => console.log(err)
     )
   }, [])
-
+  const myRef = useRef(null)
+  const executeScroll = () => scrollToRef(myRef)
   return (
     <>
       <Header />
@@ -91,45 +95,96 @@ const Partners = props => {
         </div>
       </div>
       <div className="">
-        <div className="">
+        <div className="container">
           <div className="row">
-            <div className="">
-              <div className="mt-5 text-center">
-                <h2 style={{ color: "#444" }}>
-                  <b>
-                    Grow your business <br /> by becoming a partner.
-                  </b>
+            <div className="col-md-6">
+              <div className="mt-5">
+                <h2 style={{ color: "#444" }} className="pb-2">
+                  <b>Grow your business by becoming a partner.</b>
                 </h2>
-                <ul className="jss108">
-                  <li>
-                    <h3>Partner with Web Talla to achieve business growth</h3>
-                  </li>
-                  <li>
-                    <h3>
-                      Enter the growing advertising and marketing space of
-                      Africa
-                    </h3>
-                  </li>
-                  <li>
-                    <h3>
-                      Enhance technology-enabled advertisement offerings to
-                      service clients
-                    </h3>
-                  </li>
-                  <li>
-                    <h3>Revenue-sharing arrangement</h3>
-                  </li>
-                </ul>
-                <a href="" className="jss109">
-                  Join Now
-                </a>
+                <p align="justify">
+                  <ul className="jss108">
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Partner with WebTalla to achieve business growth.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Enter the growing advertising and marketing space of
+                          Africa.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Enhance technology-enabled advertisement offerings to
+                          service clients.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>Revenue-sharing arrangement.</h3>
+                      </p>
+                    </li>
+                  </ul>
+                </p>
               </div>
+            </div>
+            <div className="col-md-6">
+              <div className="mt-5">
+                <h2 style={{ color: "#444" }} className="pb-2">
+                  <b>Partner Benefits</b>
+                </h2>
+                <p align="justify">
+                  <ul className="jss108">
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Expand your business without any upfront investment.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Enjoy the perks of PPP – Partner Preferential Pricing.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>
+                          Bridging the gap between the opportunities and
+                          available resource options to cater to the
+                          opportunities.
+                        </h3>
+                      </p>
+                    </li>
+                    <li>
+                      <p align="justify">
+                        <h3>24x7 sales support.</h3>
+                      </p>
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <div className="text-center">
+              <a href="#" onClick={executeScroll} className="jss109">
+                Join Now
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="jss2 jssb3 mt-1">
+      <div className="jss2 jssb3 mt-1" ref={myRef}>
         <div className="row">
           <div className="offset-md-4 col-md-4">
             <div className="text-center">
@@ -215,12 +270,9 @@ const Partners = props => {
             <div className="col-md-6">
               <div className="pt-6">
                 <div className="col-pb">
-                  <i
-                    class="mb-3 pb-nig"
-                    style={{ fontStyle: "unset !important" }}
-                  >
+                  <span class="mb-3 pb-nig" style={{ fontSize: "40px" }}>
                     ₦
-                  </i>
+                  </span>
                   <h4>Preferential Rates</h4>
                   <p>Enjoy the perks of PPP – Partner Preferential Pricing</p>
                 </div>
